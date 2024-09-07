@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaUtensils, FaCalendarAlt, FaShoppingCart } from 'react-icons/fa';
+import { FaHome, FaUtensils, FaCalendarAlt, FaShoppingCart, FaCog } from 'react-icons/fa';
 import { ThemeContext } from '../context/ThemeContext';
 
 const BottomMenu = () => {
@@ -8,10 +8,11 @@ const BottomMenu = () => {
   const { isDarkMode } = useContext(ThemeContext);
 
   const menuItems = [
-    { path: '/', icon: FaHome, label: 'Home' },
-    { path: '/recipes', icon: FaUtensils, label: 'Recipes' },
-    { path: '/menu', icon: FaCalendarAlt, label: 'Menu' },
-    { path: '/shopping', icon: FaShoppingCart, label: 'Shopping' },
+    { path: '/', icon: FaHome },
+    { path: '/recipes', icon: FaUtensils },
+    { path: '/menu', icon: FaCalendarAlt },
+    { path: '/shopping', icon: FaShoppingCart },
+    { path: '/settings', icon: FaCog },
   ];
 
   return (
@@ -21,14 +22,13 @@ const BottomMenu = () => {
           <li key={item.path}>
             <Link
               to={item.path}
-              className={`flex flex-col items-center ${
+              className={`flex items-center justify-center w-12 h-12 rounded-full ${
                 location.pathname === item.path
                   ? 'text-red-500 dark:text-red-400'
                   : `${isDarkMode ? 'text-gray-400 hover:text-red-400' : 'text-gray-600 hover:text-red-500'}`
               }`}
             >
-              <item.icon className="text-xl" />
-              <span className="text-xs mt-1">{item.label}</span>
+              <item.icon className="text-2xl" />
             </Link>
           </li>
         ))}

@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Recipes from './pages/Recipes';
 import Menu from './pages/Menu';
 import Shopping from './pages/Shopping';
+import Settings from './pages/Settings';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 function AppContent() {
@@ -26,6 +27,7 @@ function AppContent() {
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/shopping" element={<Shopping />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </main>
         <BottomMenu />
