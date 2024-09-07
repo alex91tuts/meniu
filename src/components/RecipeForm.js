@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaTrash, FaEdit } from 'react-icons/fa';
+import { FaTrash, FaEdit, FaPlus, FaCarrot, FaMortarPestle, FaEgg, FaCheese, FaBreadSlice, FaFish, FaDrumstickBite } from 'react-icons/fa';
+import { GiCookingPot } from 'react-icons/gi';
 
 const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   const [formData, setFormData] = useState({
@@ -62,8 +63,20 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     onSave(formData);
   };
 
+  const getIngredientIcon = (ingredient) => {
+    const lowerIngredient = ingredient.toLowerCase();
+    if (lowerIngredient.includes('vegetable') || lowerIngredient.includes('carrot')) return FaCarrot;
+    if (lowerIngredient.includes('spice') || lowerIngredient.includes('herb')) return FaMortarPestle;
+    if (lowerIngredient.includes('egg')) return FaEgg;
+    if (lowerIngredient.includes('cheese') || lowerIngredient.includes('dairy')) return FaCheese;
+    if (lowerIngredient.includes('bread') || lowerIngredient.includes('flour')) return FaBreadSlice;
+    if (lowerIngredient.includes('fish')) return FaFish;
+    if (lowerIngredient.includes('meat') || lowerIngredient.includes('chicken')) return FaDrumstickBite;
+    return FaCarrot; // Default icon
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
         <input
@@ -99,30 +112,41 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Ingredients</label>
-        {formData.ingredients.map((ingredient, index) => (
-          <input
-            key={index}
-            type="text"
-            value={ingredient}
-            onChange={(e) => handleIngredientChange(index, e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          />
-        ))}
-        <button type="button" onClick={addIngredient} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Add Ingredient</button>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ingredients</label>
+        {formData.ingredients.map((ingredient, index) => {
+          const IngredientIcon = getIngredientIcon(ingredient);
+          return (
+            <div key={index} className="flex items-center mb-2">
+              <IngredientIcon className="mr-2 text-gray-500 dark:text-gray-400" />
+              <input
+                type="text"
+                value={ingredient}
+                onChange={(e) => handleIngredientChange(index, e.target.value)}
+                className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              />
+            </div>
+          );
+        })}
+        <button type="button" onClick={addIngredient} className="mt-2 px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 flex items-center">
+          <FaPlus className="mr-2" /> Add Ingredient
+        </button>
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Instructions</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Instructions</label>
         {formData.instructions.map((instruction, index) => (
-          <textarea
-            key={index}
-            value={instruction}
-            onChange={(e) => handleInstructionChange(index, e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            rows="2"
-          ></textarea>
+          <div key={index} className="flex items-start mb-2">
+            <span className="mr-2 mt-1 text-gray-500 dark:text-gray-400">{index + 1}.</span>
+            <textarea
+              value={instruction}
+              onChange={(e) => handleInstructionChange(index, e.target.value)}
+              className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              rows="2"
+            ></textarea>
+          </div>
         ))}
-        <button type="button" onClick={addInstruction} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Add Instruction</button>
+        <button type="button" onClick={addInstruction} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center">
+          <FaPlus className="mr-2" /> Add Instruction
+        </button>
       </div>
       <div>
         <label htmlFor="mealType" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Meal Type</label>
@@ -141,18 +165,17 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
       </div>
       <div className="flex justify-between items-center">
         <div className="flex space-x-2">
-          <button type="button" onClick={onCancel} className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Save Recipe</button>
+          <button type="button" onClick={onCancel} className="px-4 py-2 bg-gray-300 text-gray-700 rounded-full hover:bg-gray-400 flex items-center">
+            <FaTrash className="mr-2" /> Cancel
+          </button>
+          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center">
+            <FaEdit className="mr-2" /> Save Recipe
+          </button>
         </div>
         {recipe && (
-          <div className="flex space-x-2">
-            <button type="button" onClick={() => onDelete(recipe.id)} className="text-red-500 hover:text-red-700">
-              <FaTrash className="text-xl" />
-            </button>
-            <button type="button" className="text-blue-500 hover:text-blue-700">
-              <FaEdit className="text-xl" />
-            </button>
-          </div>
+          <button type="button" onClick={() => onDelete(recipe.id)} className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 flex items-center">
+            <FaTrash className="mr-2" /> Delete Recipe
+          </button>
         )}
       </div>
     </form>
