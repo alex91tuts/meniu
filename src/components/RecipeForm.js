@@ -7,7 +7,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     title: '',
     description: '',
     image: '',
-    ingredients: [],
+    ingredients: [{ ingredient: '', quantity: '' }],
     instructions: [],
     mealType: ''
   });
@@ -40,9 +40,9 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     }
   };
 
-  const handleIngredientChange = (index, value) => {
+  const handleIngredientChange = (index, field, value) => {
     const newIngredients = [...formData.ingredients];
-    newIngredients[index] = value;
+    newIngredients[index] = { ...newIngredients[index], [field]: value };
     setFormData(prevData => ({
       ...prevData,
       ingredients: newIngredients
@@ -61,7 +61,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   const addIngredient = () => {
     setFormData(prevData => ({
       ...prevData,
-      ingredients: [...prevData.ingredients, '']
+      ingredients: [...prevData.ingredients, { ingredient: '', quantity: '' }]
     }));
   };
 
@@ -140,14 +140,22 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
       <div>
         <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Ingredients</label>
         {formData.ingredients.map((ingredient, index) => {
-          const IngredientIcon = getIngredientIcon(ingredient);
+          const IngredientIcon = getIngredientIcon(ingredient.ingredient);
           return (
-            <div key={index} className="flex items-center mb-2">
-              <IngredientIcon className="mr-2 text-gray-500 dark:text-gray-400" />
+            <div key={index} className="flex items-center mb-2 space-x-2">
+              <IngredientIcon className="text-gray-500 dark:text-gray-400" />
               <input
                 type="text"
-                value={ingredient}
-                onChange={(e) => handleIngredientChange(index, e.target.value)}
+                value={ingredient.quantity}
+                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                placeholder="Quantity"
+                className="w-1/4 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+              />
+              <input
+                type="text"
+                value={ingredient.ingredient}
+                onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
+                placeholder="Ingredient"
                 className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
               />
             </div>
