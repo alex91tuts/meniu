@@ -18,12 +18,12 @@ const RecipeCard = ({ title, image, participants }) => {
               />
             ))}
           </div>
-          <div className="flex space-x-2">
-            <button className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">
-              <FaEdit className="text-sm" />
+          <div className="flex space-x-1">
+            <button className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300">
+              <FaEdit className="text-xs" />
             </button>
-            <button className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300">
-              <FaTrash className="text-sm" />
+            <button className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300">
+              <FaTrash className="text-xs" />
             </button>
           </div>
         </div>
