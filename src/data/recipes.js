@@ -3,7 +3,7 @@ const recipes = [
     id: 1,
     title: 'Omletă cu legume',
     description: 'Omletă pufoasă cu ardei, ceapă și roșii',
-    image: 'https://via.placeholder.com/300x200?text=Omleta+cu+legume',
+    image: 'https://retete-culinare-cu-dana-valery.ro/cdn/recipes/omleta-cu-legume.jpg',
     ingredients: ['3 ouă', '1/4 ardei roșu', '1/4 ceapă', '1 roșie mică', 'Sare', 'Piper'],
     instructions: [
       'Bateți ouăle într-un bol cu sare și piper.',
@@ -16,31 +16,31 @@ const recipes = [
   },
   {
     id: 2,
-    title: 'Salată Caesar',
-    description: 'Salată proaspătă cu pui la grătar și dressing Caesar',
-    image: 'https://via.placeholder.com/300x200?text=Salata+Caesar',
-    ingredients: ['Salată romană', 'Piept de pui', 'Crutoane', 'Parmezan', 'Dressing Caesar'],
+    title: 'Salată de vinete',
+    description: 'Salată tradițională românească de vinete coapte',
+    image: 'https://savoriurbane.com/wp-content/uploads/2017/08/Salata-de-vinete-reteta-clasica-savori-urbane.jpg',
+    ingredients: ['3 vinete mari', '1 ceapă', 'Ulei de floarea soarelui', 'Sare'],
     instructions: [
-      'Gătiți pieptul de pui la grătar și tăiați-l felii.',
-      'Spălați și rupeți salata romană.',
-      'Amestecați salata cu crutoane și dressingul Caesar.',
-      'Adăugați puiul și parmezanul deasupra.',
-      'Serviți imediat.'
+      'Coaceți vinetele pe grătar sau în cuptor până se înmoaie.',
+      'Lăsați-le să se răcească, apoi curățați-le de coajă și scurgeți-le de zeamă.',
+      'Tocați mărunt vinetele și ceapa.',
+      'Amestecați cu ulei și sare după gust.',
+      'Serviți cu roșii și pâine prăjită.'
     ],
     mealType: 'Pranz'
   },
   {
     id: 3,
-    title: 'Somon la cuptor',
-    description: 'File de somon la cuptor cu legume la grătar',
-    image: 'https://via.placeholder.com/300x200?text=Somon+la+cuptor',
-    ingredients: ['File de somon', 'Dovlecei', 'Ardei', 'Ceapă roșie', 'Ulei de măsline', 'Lămâie', 'Ierburi aromatice'],
+    title: 'Sarmale',
+    description: 'Sarmale tradiționale românești cu carne de porc și orez',
+    image: 'https://savoriurbane.com/wp-content/uploads/2018/12/Sarmale-traditionale-romanesti-reteta-de-sarmale-cu-carne-de-porc-in-foi-de-varza-murata-savori-urbane.jpg',
+    ingredients: ['Varză murată', 'Carne tocată de porc', 'Orez', 'Ceapă', 'Morcov', 'Bulion', 'Cimbru', 'Sare', 'Piper'],
     instructions: [
-      'Preîncălziți cuptorul la 200°C.',
-      'Tăiați legumele și așezați-le într-o tavă de copt.',
-      'Puneți fileul de somon peste legume.',
-      'Stropiți cu ulei de măsline și adăugați felii de lămâie și ierburi aromatice.',
-      'Coaceți pentru 20-25 de minute sau până când somonul este gata.'
+      'Amestecați carnea tocată cu orezul, ceapa călită, morcovul ras și condimentele.',
+      'Înfășurați amestecul în frunze de varză murată.',
+      'Așezați sarmalele în oală, adăugați bulion și apă.',
+      'Fierbeți la foc mic pentru aproximativ 3 ore.',
+      'Serviți cu smântână și mămăligă.'
     ],
     mealType: 'Cina'
   }
