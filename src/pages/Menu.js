@@ -1,4 +1,5 @@
 import React from 'react';
+import RecipeCard from '../components/RecipeCard';
 
 const Menu = () => {
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -9,21 +10,27 @@ const Menu = () => {
 
   const mealTypes = {
     'Mic dejun': [
-      { id: 1, name: 'Omletă cu legume', description: 'Omletă pufoasă cu ardei, ceapă și roșii' },
-      { id: 2, name: 'Terci de ovăz', description: 'Terci cremos cu fructe de pădure și miere' },
-      { id: 3, name: 'Toast cu avocado', description: 'Pâine prăjită cu avocado și ou poșat' },
+      { id: 1, title: 'Omletă cu legume', description: 'Omletă pufoasă cu ardei, ceapă și roșii', image: 'https://example.com/omleta.jpg' },
+      { id: 2, title: 'Terci de ovăz', description: 'Terci cremos cu fructe de pădure și miere', image: 'https://example.com/terci.jpg' },
+      { id: 3, title: 'Toast cu avocado', description: 'Pâine prăjită cu avocado și ou poșat', image: 'https://example.com/toast.jpg' },
     ],
     'Pranz': [
-      { id: 1, name: 'Salată Caesar', description: 'Salată proaspătă cu pui la grătar și dressing Caesar' },
-      { id: 2, name: 'Supă de linte', description: 'Supă consistentă de linte cu legume' },
-      { id: 3, name: 'Wrap cu falafel', description: 'Wrap cu falafel, hummus și legume proaspete' },
+      { id: 1, title: 'Salată Caesar', description: 'Salată proaspătă cu pui la grătar și dressing Caesar', image: 'https://example.com/salata.jpg' },
+      { id: 2, title: 'Supă de linte', description: 'Supă consistentă de linte cu legume', image: 'https://example.com/supa.jpg' },
+      { id: 3, title: 'Wrap cu falafel', description: 'Wrap cu falafel, hummus și legume proaspete', image: 'https://example.com/wrap.jpg' },
     ],
     'Cina': [
-      { id: 1, name: 'Somon la cuptor', description: 'File de somon la cuptor cu legume la grătar' },
-      { id: 2, name: 'Paste Primavera', description: 'Paste cu un amestec colorat de legume de primăvară' },
-      { id: 3, name: 'Pui Tikka Masala', description: 'Pui aromat în sos de roșii cu condimente indiene' },
+      { id: 1, title: 'Somon la cuptor', description: 'File de somon la cuptor cu legume la grătar', image: 'https://example.com/somon.jpg' },
+      { id: 2, title: 'Paste Primavera', description: 'Paste cu un amestec colorat de legume de primăvară', image: 'https://example.com/paste.jpg' },
+      { id: 3, title: 'Pui Tikka Masala', description: 'Pui aromat în sos de roșii cu condimente indiene', image: 'https://example.com/pui.jpg' },
     ],
   };
+
+  const participants = [
+    'https://randomuser.me/api/portraits/women/1.jpg',
+    'https://randomuser.me/api/portraits/men/1.jpg',
+    'https://randomuser.me/api/portraits/men/2.jpg'
+  ];
 
   return (
     <div>
@@ -48,12 +55,14 @@ const Menu = () => {
             <h2 className="text-2xl font-bold dark:text-white">{mealType}</h2>
             <button className="text-2xl font-bold text-red-500 dark:text-red-400">+</button>
           </div>
-          <div className="masonry">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {recipes.map((recipe) => (
-              <div key={`${mealType}-${recipe.id}`} className="pin p-4">
-                <h2 className="text-xl font-semibold mb-2 dark:text-white">{recipe.name}</h2>
-                <p className="dark:text-gray-300">{recipe.description}</p>
-              </div>
+              <RecipeCard
+                key={`${mealType}-${recipe.id}`}
+                title={recipe.title}
+                image={recipe.image}
+                participants={participants}
+              />
             ))}
           </div>
         </div>
