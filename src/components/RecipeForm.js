@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaTrash, FaEdit, FaPlus, FaCarrot, FaMortarPestle, FaEgg, FaCheese, FaBreadSlice, FaFish, FaDrumstickBite } from 'react-icons/fa';
-import { GiCookingPot } from 'react-icons/gi';
+import { FaTrash, FaEdit, FaPlus } from 'react-icons/fa';
+import { GiCookingPot, GiCarrot, GiMortarPestle, GiEgg, GiCheeseWedge, GiBreadSlice, GiFishCooked, GiDrumstick } from 'react-icons/gi';
 
 const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   const [formData, setFormData] = useState({
@@ -65,14 +65,14 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
 
   const getIngredientIcon = (ingredient) => {
     const lowerIngredient = ingredient.toLowerCase();
-    if (lowerIngredient.includes('vegetable') || lowerIngredient.includes('carrot')) return FaCarrot;
-    if (lowerIngredient.includes('spice') || lowerIngredient.includes('herb')) return FaMortarPestle;
-    if (lowerIngredient.includes('egg')) return FaEgg;
-    if (lowerIngredient.includes('cheese') || lowerIngredient.includes('dairy')) return FaCheese;
-    if (lowerIngredient.includes('bread') || lowerIngredient.includes('flour')) return FaBreadSlice;
-    if (lowerIngredient.includes('fish')) return FaFish;
-    if (lowerIngredient.includes('meat') || lowerIngredient.includes('chicken')) return FaDrumstickBite;
-    return FaCarrot; // Default icon
+    if (lowerIngredient.includes('vegetable') || lowerIngredient.includes('carrot')) return GiCarrot;
+    if (lowerIngredient.includes('spice') || lowerIngredient.includes('herb')) return GiMortarPestle;
+    if (lowerIngredient.includes('egg')) return GiEgg;
+    if (lowerIngredient.includes('cheese') || lowerIngredient.includes('dairy')) return GiCheeseWedge;
+    if (lowerIngredient.includes('bread') || lowerIngredient.includes('flour')) return GiBreadSlice;
+    if (lowerIngredient.includes('fish')) return GiFishCooked;
+    if (lowerIngredient.includes('meat') || lowerIngredient.includes('chicken')) return GiDrumstick;
+    return GiCookingPot; // Default icon
   };
 
   return (
