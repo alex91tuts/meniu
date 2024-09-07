@@ -197,6 +197,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                 placeholder="Ingredient"
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
               />
+              <div className="border-b border-dashed border-gray-300 dark:border-gray-600 my-2"></div>
             </div>
           ))}
           <button type="button" onClick={addIngredient} className="mt-2 px-3 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 flex items-center text-xs">
