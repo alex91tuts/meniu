@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit, FaPlus } from 'react-icons/fa';
-import { GiCookingPot, GiCarrot, GiMortar, GiCheeseWedge, GiBreadSlice, GiFishCooked } from 'react-icons/gi';
 import { Switch } from '@headlessui/react';
 
 const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
@@ -79,16 +78,6 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     onSave(formData);
   };
 
-  const getIngredientIcon = (ingredientObj) => {
-    if (!ingredientObj || !ingredientObj.ingredient) return GiCookingPot; // Default icon
-    const lowerIngredient = ingredientObj.ingredient.toLowerCase();
-    if (lowerIngredient.includes('vegetable') || lowerIngredient.includes('carrot')) return GiCarrot;
-    if (lowerIngredient.includes('spice') || lowerIngredient.includes('herb')) return GiMortar;
-    if (lowerIngredient.includes('cheese') || lowerIngredient.includes('dairy')) return GiCheeseWedge;
-    if (lowerIngredient.includes('bread') || lowerIngredient.includes('flour')) return GiBreadSlice;
-    if (lowerIngredient.includes('fish')) return GiFishCooked;
-    return GiCookingPot; // Default icon
-  };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 w-full">
@@ -166,28 +155,24 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
       </div>
       {showIngredients ? (
         <div>
-          {formData.ingredients.map((ingredient, index) => {
-            const IngredientIcon = getIngredientIcon(ingredient);
-            return (
-              <div key={index} className="flex items-center mb-2 space-x-2">
-                <IngredientIcon className="text-gray-500 dark:text-gray-400" />
-                <input
-                  type="text"
-                  value={ingredient.quantity}
-                  onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
-                  placeholder="Quantity"
-                  className="w-1/4 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
-                />
-                <input
-                  type="text"
-                  value={ingredient.ingredient}
-                  onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
-                  placeholder="Ingredient"
-                  className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
-                />
-              </div>
-            );
-          })}
+          {formData.ingredients.map((ingredient, index) => (
+            <div key={index} className="flex items-center mb-2 space-x-2">
+              <input
+                type="text"
+                value={ingredient.quantity}
+                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                placeholder="Quantity"
+                className="w-1/4 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+              />
+              <input
+                type="text"
+                value={ingredient.ingredient}
+                onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
+                placeholder="Ingredient"
+                className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+              />
+            </div>
+          ))}
           <button type="button" onClick={addIngredient} className="mt-2 px-3 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 flex items-center text-xs">
             <FaPlus className="mr-1" /> Add Ingredient
           </button>
