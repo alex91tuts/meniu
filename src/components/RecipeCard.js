@@ -3,10 +3,10 @@ import { FaTrash, FaEdit } from 'react-icons/fa';
 
 const RecipeCard = ({ title, image, participants }) => {
   return (
-    <div className="flex bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden h-24">
+    <div className="flex bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden h-28">
       <img src={image} alt={title} className="w-1/4 object-cover" />
       <div className="p-2 flex flex-col justify-between w-3/4">
-        <h2 className="text-lg font-semibold dark:text-white truncate">{title}</h2>
+        <h2 className="text-lg font-semibold dark:text-white line-clamp-2">{title}</h2>
         <div className="flex justify-between items-end">
           <div className="flex flex-wrap">
             {participants.map((participant, index) => (
