@@ -21,11 +21,11 @@ const BottomMenu = () => {
               to={item.path}
               className={`flex flex-col items-center ${
                 location.pathname === item.path
-                  ? 'text-blue-500'
-                  : 'text-gray-600 hover:text-blue-500'
+                  ? 'text-red-500'
+                  : 'text-gray-600 hover:text-red-500'
               }`}
             >
-              <item.icon className="text-2xl" />
+              <item.icon className="text-xl" />
               <span className="text-xs mt-1">{item.label}</span>
             </Link>
           </li>
