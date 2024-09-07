@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
-import recipes from '../data/recipes';
 import users from '../data/users';
+import { addRecipe, getAllRecipes, updateRecipe, deleteRecipe } from '../utils/db';
 
 const Recipes = () => {
   const [showForm, setShowForm] = useState(false);
-  const [recipeList, setRecipeList] = useState(recipes);
+  const [recipeList, setRecipeList] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const participants = users.map(user => user.picture);
+
+  useEffect(() => {
+    loadRecipes();
+  }, []);
+
+  const loadRecipes = async () => {
+    const recipes = await getAllRecipes();
+    setRecipeList(recipes);
+  };
 
   const handleAddRecipe = () => {
     setSelectedRecipe(null);
@@ -20,16 +29,13 @@ const Recipes = () => {
     setShowForm(true);
   };
 
-  const handleSaveRecipe = (newRecipe) => {
+  const handleSaveRecipe = async (newRecipe) => {
     if (selectedRecipe) {
-      const updatedRecipes = recipeList.map(recipe => 
-        recipe.id === selectedRecipe.id ? { ...newRecipe, id: selectedRecipe.id } : recipe
-      );
-      setRecipeList(updatedRecipes);
+      await updateRecipe({ ...newRecipe, id: selectedRecipe.id });
     } else {
-      const updatedRecipes = [...recipeList, { ...newRecipe, id: recipeList.length + 1 }];
-      setRecipeList(updatedRecipes);
+      await addRecipe(newRecipe);
     }
+    await loadRecipes();
     setShowForm(false);
     setSelectedRecipe(null);
   };
@@ -39,9 +45,9 @@ const Recipes = () => {
     setSelectedRecipe(null);
   };
 
-  const handleDeleteRecipe = (id) => {
-    const updatedRecipes = recipeList.filter(recipe => recipe.id !== id);
-    setRecipeList(updatedRecipes);
+  const handleDeleteRecipe = async (id) => {
+    await deleteRecipe(id);
+    await loadRecipes();
     setShowForm(false);
     setSelectedRecipe(null);
   };
