@@ -14,6 +14,7 @@ const Menu = () => {
     style.textContent = `
       .menu-button {
         border-radius: 10px;
+        transition: box-shadow 0.3s ease;
       }
       .menu-button:active {
         box-shadow: 0 0 15px -3px rgb(255, 194, 13);
@@ -125,7 +126,7 @@ const Menu = () => {
                 }`}
                 style={{ 
                   backgroundColor: selectedMealType === mealType ? theme.accent : theme.secondary,
-                  color: selectedMealType === mealType ? theme.text : theme.textSecondary
+                  color: selectedMealType === mealType ? theme.text : theme.textSecondary,
                 }}
               >
                 {getMealTypeIcon(mealType)}
@@ -140,7 +141,7 @@ const Menu = () => {
                 className="text-2xl font-bold px-2 py-1 focus:outline-none menu-button" 
                 style={{ 
                   backgroundColor: theme.secondary,
-                  color: theme.accent
+                  color: theme.accent,
                 }}
               >
                 +
