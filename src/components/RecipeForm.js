@@ -88,13 +88,13 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 w-full">
       {formData.image && (
         <div className="w-full">
           <img src={formData.image} alt="Recipe" className="w-full h-64 object-cover" />
         </div>
       )}
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 w-full">
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
         <input
