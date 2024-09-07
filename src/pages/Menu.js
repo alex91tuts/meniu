@@ -7,15 +7,23 @@ const Menu = () => {
   const startOfWeek = new Date(currentDate);
   startOfWeek.setDate(currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
 
-  const weekMenu = [
-    { id: 1, day: 'Monday', meal: 'Spaghetti Carbonara' },
-    { id: 2, day: 'Tuesday', meal: 'Chicken Stir Fry' },
-    { id: 3, day: 'Wednesday', meal: 'Greek Salad' },
-    { id: 4, day: 'Thursday', meal: 'Beef Tacos' },
-    { id: 5, day: 'Friday', meal: 'Vegetable Curry' },
-    { id: 6, day: 'Saturday', meal: 'Grilled Salmon' },
-    { id: 7, day: 'Sunday', meal: 'Roast Chicken' },
-  ];
+  const mealTypes = {
+    'Mic dejun': [
+      { id: 1, name: 'Omletă cu legume', description: 'Omletă pufoasă cu ardei, ceapă și roșii' },
+      { id: 2, name: 'Terci de ovăz', description: 'Terci cremos cu fructe de pădure și miere' },
+      { id: 3, name: 'Toast cu avocado', description: 'Pâine prăjită cu avocado și ou poșat' },
+    ],
+    'Pranz': [
+      { id: 1, name: 'Salată Caesar', description: 'Salată proaspătă cu pui la grătar și dressing Caesar' },
+      { id: 2, name: 'Supă de linte', description: 'Supă consistentă de linte cu legume' },
+      { id: 3, name: 'Wrap cu falafel', description: 'Wrap cu falafel, hummus și legume proaspete' },
+    ],
+    'Cina': [
+      { id: 1, name: 'Somon la cuptor', description: 'File de somon la cuptor cu legume la grătar' },
+      { id: 2, name: 'Paste Primavera', description: 'Paste cu un amestec colorat de legume de primăvară' },
+      { id: 3, name: 'Pui Tikka Masala', description: 'Pui aromat în sos de roșii cu condimente indiene' },
+    ],
+  };
 
   return (
     <div>
@@ -34,17 +42,17 @@ const Menu = () => {
           );
         })}
       </div>
-      {['Mic dejun', 'Pranz', 'Cina'].map((mealType) => (
+      {Object.entries(mealTypes).map(([mealType, recipes]) => (
         <div key={mealType} className="mb-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold dark:text-white">{mealType}</h2>
             <button className="text-2xl font-bold text-red-500 dark:text-red-400">+</button>
           </div>
           <div className="masonry">
-            {weekMenu.map((item) => (
-              <div key={`${mealType}-${item.id}`} className="pin p-4">
-                <h2 className="text-xl font-semibold mb-2 dark:text-white">{item.day}</h2>
-                <p className="dark:text-gray-300">{item.meal}</p>
+            {recipes.map((recipe) => (
+              <div key={`${mealType}-${recipe.id}`} className="pin p-4">
+                <h2 className="text-xl font-semibold mb-2 dark:text-white">{recipe.name}</h2>
+                <p className="dark:text-gray-300">{recipe.description}</p>
               </div>
             ))}
           </div>
