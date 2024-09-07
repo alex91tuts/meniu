@@ -170,12 +170,12 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                   value={ingredient.quantity}
                   onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
                   placeholder="Cantitate"
-                  className="w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-xs p-1"
+                  className="w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-xs p-1"
                 />
                 <select
                   value={ingredient.quantityType}
                   onChange={(e) => handleIngredientChange(index, 'quantityType', e.target.value)}
-                  className="w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-xs p-1"
+                  className="w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-xs p-1"
                 >
                   <option value="grams">grame</option>
                   <option value="piece">buc.</option>
@@ -187,7 +187,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                   onClick={() => deleteIngredient(index)}
                   className="w-1/3 px-2 py-1 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 flex items-center justify-center text-xs"
                 >
-                  <FaTrash className="mr-1 text-red-500" /> Delete
+                  <FaTrash className="mr-1 text-red-500" /> Sterge
                 </button>
               </div>
               <input
@@ -195,7 +195,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                 value={ingredient.ingredient}
                 onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
                 placeholder="Ingredient"
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-xs p-1"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-xs p-1"
               />
               <div className="border-b border-dashed border-gray-300 dark:border-gray-600 my-2"></div>
             </div>
