@@ -8,6 +8,19 @@ import { FaCoffee, FaUtensils, FaMoon } from 'react-icons/fa';
 
 const Menu = () => {
   const { theme } = useContext(ThemeContext);
+
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .focus\\:shadow-outline:focus {
+        box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.5);
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
   const [showForm, setShowForm] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [recipeList, setRecipeList] = useState(recipes);
@@ -102,7 +115,7 @@ const Menu = () => {
               <button
                 key={mealType}
                 onClick={() => setSelectedMealType(mealType)}
-                className={`flex items-center px-4 py-2 rounded-sm ${
+                className={`flex items-center px-4 py-2 rounded-sm focus:outline-none focus:shadow-outline ${
                   selectedMealType === mealType
                     ? 'text-white'
                     : 'text-gray-700 dark:text-gray-300'
@@ -122,7 +135,7 @@ const Menu = () => {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold dark:text-white">{selectedMealType}</h2>
               <button 
-                className="text-2xl font-bold px-2 py-1 rounded-sm" 
+                className="text-2xl font-bold px-2 py-1 rounded-sm focus:outline-none focus:shadow-outline" 
                 style={{ 
                   borderRadius: '3px',
                   backgroundColor: theme.secondary,
