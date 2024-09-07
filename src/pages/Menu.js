@@ -34,7 +34,10 @@ const Menu = () => {
           );
         })}
       </div>
-      <h1 className="text-3xl font-bold mb-6 dark:text-white">Menu</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold dark:text-white">Mic dejun</h2>
+        <button className="text-2xl font-bold text-red-500 dark:text-red-400">+</button>
+      </div>
       <div className="masonry">
         {weekMenu.map((item) => (
           <div key={item.id} className="pin p-4">
