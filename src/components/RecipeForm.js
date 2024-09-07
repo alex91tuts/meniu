@@ -77,8 +77,9 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     onSave(formData);
   };
 
-  const getIngredientIcon = (ingredient) => {
-    const lowerIngredient = ingredient.toLowerCase();
+  const getIngredientIcon = (ingredientObj) => {
+    if (!ingredientObj || !ingredientObj.ingredient) return GiCookingPot; // Default icon
+    const lowerIngredient = ingredientObj.ingredient.toLowerCase();
     if (lowerIngredient.includes('vegetable') || lowerIngredient.includes('carrot')) return GiCarrot;
     if (lowerIngredient.includes('spice') || lowerIngredient.includes('herb')) return GiMortar;
     if (lowerIngredient.includes('cheese') || lowerIngredient.includes('dairy')) return GiCheeseWedge;
@@ -140,7 +141,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
       <div>
         <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Ingredients</label>
         {formData.ingredients.map((ingredient, index) => {
-          const IngredientIcon = getIngredientIcon(ingredient.ingredient);
+          const IngredientIcon = getIngredientIcon(ingredient);
           return (
             <div key={index} className="flex items-center mb-2 space-x-2">
               <IngredientIcon className="text-gray-500 dark:text-gray-400" />
