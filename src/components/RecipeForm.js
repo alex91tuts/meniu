@@ -7,7 +7,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     title: '',
     description: '',
     image: '',
-    ingredients: [{ ingredient: '', quantity: '' }],
+    ingredients: [{ ingredient: '', quantity: '', quantityType: 'grams' }],
     instructions: [],
     mealType: ''
   });
@@ -162,8 +162,18 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                 value={ingredient.quantity}
                 onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
                 placeholder="Quantity"
-                className="w-1/4 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+                className="w-1/6 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
               />
+              <select
+                value={ingredient.quantityType}
+                onChange={(e) => handleIngredientChange(index, 'quantityType', e.target.value)}
+                className="w-1/6 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+              >
+                <option value="grams">grams</option>
+                <option value="piece">piece</option>
+                <option value="spoon">spoon</option>
+                <option value="ml">ml</option>
+              </select>
               <input
                 type="text"
                 value={ingredient.ingredient}
@@ -171,6 +181,13 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                 placeholder="Ingredient"
                 className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
               />
+              <button
+                type="button"
+                onClick={() => deleteIngredient(index)}
+                className="px-2 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 flex items-center text-xs"
+              >
+                <FaTrash />
+              </button>
             </div>
           ))}
           <button type="button" onClick={addIngredient} className="mt-2 px-3 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 flex items-center text-xs">
