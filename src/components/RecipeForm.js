@@ -62,7 +62,14 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   const addIngredient = () => {
     setFormData(prevData => ({
       ...prevData,
-      ingredients: [...prevData.ingredients, { ingredient: '', quantity: '' }]
+      ingredients: [...prevData.ingredients, { ingredient: '', quantity: '', quantityType: 'grams' }]
+    }));
+  };
+
+  const deleteIngredient = (index) => {
+    setFormData(prevData => ({
+      ...prevData,
+      ingredients: prevData.ingredients.filter((_, i) => i !== index)
     }));
   };
 
