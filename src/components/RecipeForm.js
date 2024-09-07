@@ -170,12 +170,12 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                   value={ingredient.quantity}
                   onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
                   placeholder="Quantity"
-                  className="w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+                  className="w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-1"
                 />
                 <select
                   value={ingredient.quantityType}
                   onChange={(e) => handleIngredientChange(index, 'quantityType', e.target.value)}
-                  className="w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+                  className="w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-1"
                 >
                   <option value="grams">grame</option>
                   <option value="piece">buc.</option>
@@ -195,7 +195,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                 value={ingredient.ingredient}
                 onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
                 placeholder="Ingredient"
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-1"
               />
               <div className="border-b border-dashed border-gray-300 dark:border-gray-600 my-2"></div>
             </div>
