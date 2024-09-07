@@ -120,13 +120,11 @@ const Menu = () => {
                 key={mealType}
                 onClick={() => setSelectedMealType(mealType)}
                 className={`flex items-center px-4 py-2 focus:outline-none menu-button ${
-                  selectedMealType === mealType
-                    ? 'text-white active'
-                    : 'text-gray-700 dark:text-gray-300'
+                  selectedMealType === mealType ? 'active' : ''
                 }`}
                 style={{ 
-                  backgroundColor: selectedMealType === mealType ? theme.accent : theme.secondary,
-                  color: selectedMealType === mealType ? theme.text : theme.textSecondary,
+                  backgroundColor: theme.secondary,
+                  color: selectedMealType === mealType ? theme.accent : theme.textSecondary,
                 }}
               >
                 {getMealTypeIcon(mealType)}
