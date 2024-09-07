@@ -26,6 +26,20 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prevData => ({
+          ...prevData,
+          image: reader.result
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleIngredientChange = (index, value) => {
     const newIngredients = [...formData.ingredients];
     newIngredients[index] = value;
@@ -75,6 +89,11 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+      {formData.image && (
+        <div className="mb-4">
+          <img src={formData.image} alt="Recipe" className="w-full h-64 object-cover rounded-lg" />
+        </div>
+      )}
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
         <input
@@ -99,14 +118,21 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
         ></textarea>
       </div>
       <div>
-        <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Image URL</label>
+        <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Image</label>
         <input
-          type="text"
+          type="file"
           id="image"
           name="image"
-          value={formData.image}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          onChange={handleImageChange}
+          className="mt-1 block w-full text-sm text-gray-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+            file:bg-violet-50 file:text-violet-700
+            hover:file:bg-violet-100
+            dark:file:bg-violet-900 dark:file:text-violet-200
+            dark:hover:file:bg-violet-800"
+          accept="image/*"
         />
       </div>
       <div>
