@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
 import recipes from '../data/recipes';
@@ -6,6 +7,7 @@ import users from '../data/users';
 import { FaCoffee, FaUtensils, FaMoon } from 'react-icons/fa';
 
 const Menu = () => {
+  const { theme } = useContext(ThemeContext);
   const [showForm, setShowForm] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [recipeList, setRecipeList] = useState(recipes);
@@ -102,10 +104,14 @@ const Menu = () => {
                 onClick={() => setSelectedMealType(mealType)}
                 className={`flex items-center px-4 py-2 rounded-sm ${
                   selectedMealType === mealType
-                    ? 'bg-red-500 text-white'
-                    : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                    ? 'text-white'
+                    : 'text-gray-700 dark:text-gray-300'
                 }`}
-                style={{ borderRadius: '3px' }}
+                style={{ 
+                  borderRadius: '3px',
+                  backgroundColor: selectedMealType === mealType ? theme.accent : theme.secondary,
+                  color: selectedMealType === mealType ? theme.text : theme.textSecondary
+                }}
               >
                 {getMealTypeIcon(mealType)}
                 <span className="ml-2">{mealType}</span>
@@ -115,7 +121,16 @@ const Menu = () => {
           <div className="mb-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold dark:text-white">{selectedMealType}</h2>
-              <button className="text-2xl font-bold text-red-500 dark:text-red-400 px-2 py-1 rounded-sm" style={{ borderRadius: '3px' }}>+</button>
+              <button 
+                className="text-2xl font-bold px-2 py-1 rounded-sm" 
+                style={{ 
+                  borderRadius: '3px',
+                  backgroundColor: theme.secondary,
+                  color: theme.accent
+                }}
+              >
+                +
+              </button>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {mealTypes[selectedMealType].map((recipe) => (
