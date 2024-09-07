@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaHome, FaSearch, FaHeart, FaUser } from 'react-icons/fa/index.js';
+import { FaHome, FaUtensils, FaCalendarAlt, FaShoppingCart } from 'react-icons/fa';
 
 const BottomMenu = () => {
   return (
@@ -13,21 +13,21 @@ const BottomMenu = () => {
           </Link>
         </li>
         <li>
-          <Link to="/search" className="flex flex-col items-center text-gray-600 hover:text-blue-500">
-            <FaSearch className="text-2xl" />
-            <span className="text-xs mt-1">Search</span>
+          <Link to="/recipes" className="flex flex-col items-center text-gray-600 hover:text-blue-500">
+            <FaUtensils className="text-2xl" />
+            <span className="text-xs mt-1">Recipes</span>
           </Link>
         </li>
         <li>
-          <Link to="/favorites" className="flex flex-col items-center text-gray-600 hover:text-blue-500">
-            <FaHeart className="text-2xl" />
-            <span className="text-xs mt-1">Favorites</span>
+          <Link to="/menu" className="flex flex-col items-center text-gray-600 hover:text-blue-500">
+            <FaCalendarAlt className="text-2xl" />
+            <span className="text-xs mt-1">Menu</span>
           </Link>
         </li>
         <li>
-          <Link to="/profile" className="flex flex-col items-center text-gray-600 hover:text-blue-500">
-            <FaUser className="text-2xl" />
-            <span className="text-xs mt-1">Profile</span>
+          <Link to="/shopping" className="flex flex-col items-center text-gray-600 hover:text-blue-500">
+            <FaShoppingCart className="text-2xl" />
+            <span className="text-xs mt-1">Shopping</span>
           </Link>
         </li>
       </ul>

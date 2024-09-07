@@ -1,12 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import BottomMenu from './components/BottomMenu';
-
-// Placeholder components for each route
-const Home = () => <div className="p-4">Home Page</div>;
-const Search = () => <div className="p-4">Search Page</div>;
-const Favorites = () => <div className="p-4">Favorites Page</div>;
-const Profile = () => <div className="p-4">Profile Page</div>;
+import Home from './pages/Home';
+import Recipes from './pages/Recipes';
+import Menu from './pages/Menu';
+import Shopping from './pages/Shopping';
 
 function App() {
   return (
@@ -14,9 +12,9 @@ function App() {
       <div className="min-h-screen bg-gray-100 pb-16">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/shopping" element={<Shopping />} />
         </Routes>
         <BottomMenu />
       </div>
