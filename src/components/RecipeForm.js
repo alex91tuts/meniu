@@ -185,9 +185,9 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
                 <button
                   type="button"
                   onClick={() => deleteIngredient(index)}
-                  className="px-2 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 flex items-center text-xs"
+                  className="w-1/3 px-2 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 flex items-center justify-center text-sm"
                 >
-                  <FaTrash />
+                  <FaTrash className="mr-2" /> Delete
                 </button>
               </div>
               <input
