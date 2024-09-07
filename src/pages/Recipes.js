@@ -1,24 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RecipeCard from '../components/RecipeCard';
+import RecipeForm from '../components/RecipeForm';
 import recipes from '../data/recipes';
 import users from '../data/users';
 
 const Recipes = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [recipeList, setRecipeList] = useState(recipes);
   const participants = users.map(user => user.picture);
+
+  const handleAddRecipe = () => {
+    setShowForm(true);
+  };
+
+  const handleSaveRecipe = (newRecipe) => {
+    const updatedRecipes = [...recipeList, { ...newRecipe, id: recipeList.length + 1 }];
+    setRecipeList(updatedRecipes);
+    setShowForm(false);
+  };
+
+  const handleCancelForm = () => {
+    setShowForm(false);
+  };
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6 dark:text-white">Recipes</h1>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {recipes.map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            title={recipe.title}
-            image={recipe.image}
-            participants={participants}
-          />
-        ))}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold dark:text-white">Recipes</h1>
+        <button
+          onClick={handleAddRecipe}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Add Recipe
+        </button>
       </div>
+      {showForm ? (
+        <RecipeForm onSave={handleSaveRecipe} onCancel={handleCancelForm} />
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {recipeList.map((recipe) => (
+            <RecipeCard
+              key={recipe.id}
+              title={recipe.title}
+              image={recipe.image}
+              participants={participants}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
