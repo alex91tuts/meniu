@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
 
 const RecipeCard = ({ title, image, participants, onClick }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <div className="flex bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden h-20 cursor-pointer" onClick={onClick}>
+    <div 
+      className="flex rounded-lg shadow-md overflow-hidden h-20 cursor-pointer" 
+      onClick={onClick}
+      style={{ backgroundColor: theme.secondary }}
+    >
       <img src={image} alt={title} className="w-1/4 object-cover" />
       <div className="p-2 flex flex-col justify-between w-3/4">
-        <h2 className="text-base font-semibold dark:text-white line-clamp-2">{title}</h2>
+        <h2 className="text-base font-semibold line-clamp-2" style={{ color: theme.accent }}>{title}</h2>
         <div className="flex justify-between items-end">
           <div className="flex flex-wrap">
             {participants.map((participant, index) => (

@@ -10,14 +10,14 @@ import Settings from './pages/Settings';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 function AppContent() {
-  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+  const { isDarkMode, toggleTheme, theme } = useContext(ThemeContext);
 
   return (
     <Router>
-      <div className={`min-h-screen ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-        <header className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm py-4 px-6 mb-6 flex justify-between items-center`}>
-          <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-red-400' : 'text-red-500'}`}>Meniu</h1>
-          <button onClick={toggleTheme} className={`p-2 rounded-full ${isDarkMode ? 'bg-gray-700 text-yellow-300' : 'bg-gray-200 text-gray-700'}`}>
+      <div className="min-h-screen" style={{ backgroundColor: theme.background }}>
+        <header className="shadow-sm py-4 px-6 mb-6 flex justify-between items-center" style={{ backgroundColor: theme.secondary }}>
+          <h1 className="text-2xl font-bold" style={{ color: theme.accent }}>Meniu</h1>
+          <button onClick={toggleTheme} className="p-2 rounded-full" style={{ backgroundColor: isDarkMode ? '#333' : '#e0e0e0', color: theme.accent }}>
             {isDarkMode ? <FaSun /> : <FaMoon />}
           </button>
         </header>
