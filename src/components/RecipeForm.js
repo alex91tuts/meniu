@@ -140,30 +140,29 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
           accept="image/*"
         />
       </div>
-      <div className="flex flex-col items-center justify-center mb-6">
-        <span className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-          {showIngredients ? 'Ingredients' : 'Instructions'}
-        </span>
-        <Switch
-          checked={showIngredients}
-          onChange={setShowIngredients}
-          className={`${
-            showIngredients ? 'bg-blue-600' : 'bg-gray-200'
-          } relative inline-flex h-10 w-32 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+      <div className="flex w-full mb-6">
+        <button
+          type="button"
+          onClick={() => setShowIngredients(true)}
+          className={`flex-1 py-2 text-sm font-medium rounded-tl-md rounded-bl-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+            showIngredients
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+          }`}
         >
-          <span className="sr-only">Toggle ingredients/instructions</span>
-          <span
-            className={`${
-              showIngredients ? 'translate-x-20' : 'translate-x-2'
-            } inline-block h-8 w-8 transform rounded-full bg-white transition-transform`}
-          />
-          <span className={`absolute left-2 text-xs font-medium ${showIngredients ? 'text-blue-100' : 'text-gray-500'}`}>
-            Ingredients
-          </span>
-          <span className={`absolute right-2 text-xs font-medium ${!showIngredients ? 'text-gray-700' : 'text-blue-100'}`}>
-            Instructions
-          </span>
-        </Switch>
+          Ingredients
+        </button>
+        <button
+          type="button"
+          onClick={() => setShowIngredients(false)}
+          className={`flex-1 py-2 text-sm font-medium rounded-tr-md rounded-br-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+            !showIngredients
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+          }`}
+        >
+          Instructions
+        </button>
       </div>
       {showIngredients ? (
         <div>
