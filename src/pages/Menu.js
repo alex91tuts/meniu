@@ -12,8 +12,11 @@ const Menu = () => {
   React.useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
-      .focus\\:shadow-outline:focus {
-        box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.5);
+      .menu-button {
+        border-radius: 10px;
+      }
+      .menu-button:active {
+        box-shadow: 0 0 15px -3px rgb(255, 194, 13);
       }
     `;
     document.head.appendChild(style);
@@ -115,13 +118,12 @@ const Menu = () => {
               <button
                 key={mealType}
                 onClick={() => setSelectedMealType(mealType)}
-                className={`flex items-center px-4 py-2 rounded-sm focus:outline-none focus:shadow-outline ${
+                className={`flex items-center px-4 py-2 focus:outline-none menu-button ${
                   selectedMealType === mealType
                     ? 'text-white'
                     : 'text-gray-700 dark:text-gray-300'
                 }`}
                 style={{ 
-                  borderRadius: '3px',
                   backgroundColor: selectedMealType === mealType ? theme.accent : theme.secondary,
                   color: selectedMealType === mealType ? theme.text : theme.textSecondary
                 }}
@@ -135,9 +137,8 @@ const Menu = () => {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold dark:text-white">{selectedMealType}</h2>
               <button 
-                className="text-2xl font-bold px-2 py-1 rounded-sm focus:outline-none focus:shadow-outline" 
+                className="text-2xl font-bold px-2 py-1 focus:outline-none menu-button" 
                 style={{ 
-                  borderRadius: '3px',
                   backgroundColor: theme.secondary,
                   color: theme.accent
                 }}
