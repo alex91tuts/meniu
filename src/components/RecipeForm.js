@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit, FaPlus } from 'react-icons/fa';
-import { GiCookingPot, GiCarrot, GiMortar, GiEgg, GiCheeseWedge, GiBreadSlice, GiFishCooked, GiDrumstick } from 'react-icons/gi';
+import { GiCookingPot, GiCarrot, GiMortar, GiCheeseWedge, GiBreadSlice, GiFishCooked } from 'react-icons/gi';
 
 const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   const [formData, setFormData] = useState({
@@ -67,11 +67,9 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     const lowerIngredient = ingredient.toLowerCase();
     if (lowerIngredient.includes('vegetable') || lowerIngredient.includes('carrot')) return GiCarrot;
     if (lowerIngredient.includes('spice') || lowerIngredient.includes('herb')) return GiMortar;
-    if (lowerIngredient.includes('egg')) return GiEgg;
     if (lowerIngredient.includes('cheese') || lowerIngredient.includes('dairy')) return GiCheeseWedge;
     if (lowerIngredient.includes('bread') || lowerIngredient.includes('flour')) return GiBreadSlice;
     if (lowerIngredient.includes('fish')) return GiFishCooked;
-    if (lowerIngredient.includes('meat') || lowerIngredient.includes('chicken')) return GiDrumstick;
     return GiCookingPot; // Default icon
   };
 
