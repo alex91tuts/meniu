@@ -140,8 +140,8 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
           accept="image/*"
         />
       </div>
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <span className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
           {showIngredients ? 'Ingredients' : 'Instructions'}
         </span>
         <Switch
@@ -149,13 +149,20 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
           onChange={setShowIngredients}
           className={`${
             showIngredients ? 'bg-blue-600' : 'bg-gray-200'
-          } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+          } relative inline-flex h-10 w-32 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
         >
+          <span className="sr-only">Toggle ingredients/instructions</span>
           <span
             className={`${
-              showIngredients ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+              showIngredients ? 'translate-x-20' : 'translate-x-2'
+            } inline-block h-8 w-8 transform rounded-full bg-white transition-transform`}
           />
+          <span className={`absolute left-2 text-xs font-medium ${showIngredients ? 'text-blue-100' : 'text-gray-500'}`}>
+            Ingredients
+          </span>
+          <span className={`absolute right-2 text-xs font-medium ${!showIngredients ? 'text-gray-700' : 'text-blue-100'}`}>
+            Instructions
+          </span>
         </Switch>
       </div>
       {showIngredients ? (
