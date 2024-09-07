@@ -12,7 +12,7 @@ const RecipeCard = ({ title, image, participants, onClick }) => {
     >
       <img src={image} alt={title} className="w-1/4 object-cover" />
       <div className="p-2 flex flex-col justify-between w-3/4">
-        <h2 className="text-base font-semibold line-clamp-2" style={{ color: theme.accent }}>{title}</h2>
+        <h2 className="text-base font-semibold line-clamp-2 text-gray-400">{title}</h2>
         <div className="flex justify-between items-end">
           <div className="flex flex-wrap">
             {participants.map((participant, index) => (
