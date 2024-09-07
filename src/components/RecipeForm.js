@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit, FaPlus } from 'react-icons/fa';
 import { GiCookingPot, GiCarrot, GiMortar, GiCheeseWedge, GiBreadSlice, GiFishCooked } from 'react-icons/gi';
+import { Switch } from '@headlessui/react';
 
 const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     instructions: [],
     mealType: ''
   });
+  const [showIngredients, setShowIngredients] = useState(true);
 
   useEffect(() => {
     if (recipe) {
@@ -138,51 +140,70 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
           accept="image/*"
         />
       </div>
-      <div>
-        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Ingredients</label>
-        {formData.ingredients.map((ingredient, index) => {
-          const IngredientIcon = getIngredientIcon(ingredient);
-          return (
-            <div key={index} className="flex items-center mb-2 space-x-2">
-              <IngredientIcon className="text-gray-500 dark:text-gray-400" />
-              <input
-                type="text"
-                value={ingredient.quantity}
-                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
-                placeholder="Quantity"
-                className="w-1/4 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
-              />
-              <input
-                type="text"
-                value={ingredient.ingredient}
-                onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
-                placeholder="Ingredient"
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {showIngredients ? 'Ingredients' : 'Instructions'}
+        </span>
+        <Switch
+          checked={showIngredients}
+          onChange={setShowIngredients}
+          className={`${
+            showIngredients ? 'bg-blue-600' : 'bg-gray-200'
+          } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+        >
+          <span
+            className={`${
+              showIngredients ? 'translate-x-6' : 'translate-x-1'
+            } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+          />
+        </Switch>
+      </div>
+      {showIngredients ? (
+        <div>
+          {formData.ingredients.map((ingredient, index) => {
+            const IngredientIcon = getIngredientIcon(ingredient);
+            return (
+              <div key={index} className="flex items-center mb-2 space-x-2">
+                <IngredientIcon className="text-gray-500 dark:text-gray-400" />
+                <input
+                  type="text"
+                  value={ingredient.quantity}
+                  onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                  placeholder="Quantity"
+                  className="w-1/4 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+                />
+                <input
+                  type="text"
+                  value={ingredient.ingredient}
+                  onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
+                  placeholder="Ingredient"
+                  className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+                />
+              </div>
+            );
+          })}
+          <button type="button" onClick={addIngredient} className="mt-2 px-3 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 flex items-center text-xs">
+            <FaPlus className="mr-1" /> Add Ingredient
+          </button>
+        </div>
+      ) : (
+        <div>
+          {formData.instructions.map((instruction, index) => (
+            <div key={index} className="flex items-start mb-2">
+              <span className="mr-2 mt-1 text-gray-500 dark:text-gray-400 text-xs">{index + 1}.</span>
+              <textarea
+                value={instruction}
+                onChange={(e) => handleInstructionChange(index, e.target.value)}
                 className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
-              />
+                rows="2"
+              ></textarea>
             </div>
-          );
-        })}
-        <button type="button" onClick={addIngredient} className="mt-2 px-3 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 flex items-center text-xs">
-          <FaPlus className="mr-1" /> Add Ingredient
-        </button>
-      </div>
-      <div>
-        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Instructions</label>
-        {formData.instructions.map((instruction, index) => (
-          <div key={index} className="flex items-start mb-2">
-            <span className="mr-2 mt-1 text-gray-500 dark:text-gray-400 text-xs">{index + 1}.</span>
-            <textarea
-              value={instruction}
-              onChange={(e) => handleInstructionChange(index, e.target.value)}
-              className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
-              rows="2"
-            ></textarea>
-          </div>
-        ))}
-        <button type="button" onClick={addInstruction} className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center text-xs">
-          <FaPlus className="mr-1" /> Add Instruction
-        </button>
-      </div>
+          ))}
+          <button type="button" onClick={addInstruction} className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center text-xs">
+            <FaPlus className="mr-1" /> Add Instruction
+          </button>
+        </div>
+      )}
       <div>
         <label htmlFor="mealType" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Meal Type</label>
         <select
