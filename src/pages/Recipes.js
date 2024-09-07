@@ -6,7 +6,7 @@ const Recipes = () => {
   const users = [
     { name: 'Mariana', picture: 'https://randomuser.me/api/portraits/women/1.jpg' },
     { name: 'Alex', picture: 'https://randomuser.me/api/portraits/men/1.jpg' },
-    { name: 'Matei', picture: 'https://randomuser.me/api/portraits/kids/1.jpg' }
+    { name: 'Matei', picture: 'https://randomuser.me/api/portraits/kids/2.jpg' }
   ];
 
   useEffect(() => {
