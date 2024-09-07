@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import users from '../data/users';
 
 const Settings = () => {
-  const [profiles, setProfiles] = useState([
-    { name: 'Mariana', picture: 'https://randomuser.me/api/portraits/women/1.jpg' },
-    { name: 'Alex', picture: 'https://randomuser.me/api/portraits/men/1.jpg' },
-    { name: 'Matei', picture: 'https://randomuser.me/api/portraits/men/2.jpg' }
-  ]);
+  const [profiles, setProfiles] = useState(users);
   const [newProfile, setNewProfile] = useState({ name: '', picture: '' });
 
   useEffect(() => {
