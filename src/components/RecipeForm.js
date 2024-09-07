@@ -88,12 +88,13 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800">
       {formData.image && (
-        <div className="mb-4">
-          <img src={formData.image} alt="Recipe" className="w-full h-64 object-cover rounded-lg" />
+        <div className="w-full">
+          <img src={formData.image} alt="Recipe" className="w-full h-64 object-cover" />
         </div>
       )}
+      <div className="p-6 space-y-6">
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
         <input
@@ -201,6 +202,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
             <FaTrash className="mr-2" /> Delete Recipe
           </button>
         )}
+      </div>
       </div>
     </form>
   );
