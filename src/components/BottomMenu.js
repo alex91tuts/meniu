@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaHome, FaSearch, FaHeart, FaUser } from 'react-icons/fa';
+import { FaHome, FaSearch, FaHeart, FaUser } from 'react-icons/fa/index.js';
 
 const BottomMenu = () => {
   return (
