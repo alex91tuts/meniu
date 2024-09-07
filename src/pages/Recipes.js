@@ -15,10 +15,10 @@ const Recipes = () => {
         const mealResponse = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=c');
         const mealData = await mealResponse.json();
 
-        const updatedRecipes = mealData.meals.slice(0, 6).map((meal) => ({
+        const updatedRecipes = mealData.meals.slice(0, 6).map((meal, index) => ({
           id: meal.idMeal,
           title: meal.strMeal,
-          image: meal.strMealThumb,
+          image: `https://via.placeholder.com/300x200?text=Recipe+${index + 1}`,
           participants: users.map(user => user.picture)
         }));
 

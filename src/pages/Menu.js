@@ -10,19 +10,19 @@ const Menu = () => {
 
   const mealTypes = {
     'Mic dejun': [
-      { id: 1, title: 'Omletă cu legume', description: 'Omletă pufoasă cu ardei, ceapă și roșii', image: 'https://example.com/omleta.jpg' },
-      { id: 2, title: 'Terci de ovăz', description: 'Terci cremos cu fructe de pădure și miere', image: 'https://example.com/terci.jpg' },
-      { id: 3, title: 'Toast cu avocado', description: 'Pâine prăjită cu avocado și ou poșat', image: 'https://example.com/toast.jpg' },
+      { id: 1, title: 'Omletă cu legume', description: 'Omletă pufoasă cu ardei, ceapă și roșii', image: 'https://via.placeholder.com/300x200?text=Omleta+cu+legume' },
+      { id: 2, title: 'Terci de ovăz', description: 'Terci cremos cu fructe de pădure și miere', image: 'https://via.placeholder.com/300x200?text=Terci+de+ovaz' },
+      { id: 3, title: 'Toast cu avocado', description: 'Pâine prăjită cu avocado și ou poșat', image: 'https://via.placeholder.com/300x200?text=Toast+cu+avocado' },
     ],
     'Pranz': [
-      { id: 1, title: 'Salată Caesar', description: 'Salată proaspătă cu pui la grătar și dressing Caesar', image: 'https://example.com/salata.jpg' },
-      { id: 2, title: 'Supă de linte', description: 'Supă consistentă de linte cu legume', image: 'https://example.com/supa.jpg' },
-      { id: 3, title: 'Wrap cu falafel', description: 'Wrap cu falafel, hummus și legume proaspete', image: 'https://example.com/wrap.jpg' },
+      { id: 1, title: 'Salată Caesar', description: 'Salată proaspătă cu pui la grătar și dressing Caesar', image: 'https://via.placeholder.com/300x200?text=Salata+Caesar' },
+      { id: 2, title: 'Supă de linte', description: 'Supă consistentă de linte cu legume', image: 'https://via.placeholder.com/300x200?text=Supa+de+linte' },
+      { id: 3, title: 'Wrap cu falafel', description: 'Wrap cu falafel, hummus și legume proaspete', image: 'https://via.placeholder.com/300x200?text=Wrap+cu+falafel' },
     ],
     'Cina': [
-      { id: 1, title: 'Somon la cuptor', description: 'File de somon la cuptor cu legume la grătar', image: 'https://example.com/somon.jpg' },
-      { id: 2, title: 'Paste Primavera', description: 'Paste cu un amestec colorat de legume de primăvară', image: 'https://example.com/paste.jpg' },
-      { id: 3, title: 'Pui Tikka Masala', description: 'Pui aromat în sos de roșii cu condimente indiene', image: 'https://example.com/pui.jpg' },
+      { id: 1, title: 'Somon la cuptor', description: 'File de somon la cuptor cu legume la grătar', image: 'https://via.placeholder.com/300x200?text=Somon+la+cuptor' },
+      { id: 2, title: 'Paste Primavera', description: 'Paste cu un amestec colorat de legume de primăvară', image: 'https://via.placeholder.com/300x200?text=Paste+Primavera' },
+      { id: 3, title: 'Pui Tikka Masala', description: 'Pui aromat în sos de roșii cu condimente indiene', image: 'https://via.placeholder.com/300x200?text=Pui+Tikka+Masala' },
     ],
   };
 
