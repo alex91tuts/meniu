@@ -88,7 +88,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
       )}
       <div className="p-8 space-y-8 w-full">
       <div>
-        <label htmlFor="title" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Title</label>
+        <label htmlFor="title" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Titlu</label>
         <input
           type="text"
           id="title"
@@ -100,7 +100,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
         />
       </div>
       <div>
-        <label htmlFor="description" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Description</label>
+        <label htmlFor="description" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Descriere</label>
         <textarea
           id="description"
           name="description"
@@ -111,7 +111,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
         ></textarea>
       </div>
       <div>
-        <label htmlFor="image" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Image</label>
+        <label htmlFor="image" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Imagine</label>
         <input
           type="file"
           id="image"
@@ -139,7 +139,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
               : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
           }`}
         >
-          Ingredients
+          Ingrediente
         </button>
         <button
           type="button"
@@ -150,7 +150,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
               : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
           }`}
         >
-          Instructions
+          Instructiuni
         </button>
       </div>
       {showIngredients ? (
@@ -174,7 +174,7 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
             </div>
           ))}
           <button type="button" onClick={addIngredient} className="mt-2 px-3 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 flex items-center text-xs">
-            <FaPlus className="mr-1" /> Add Ingredient
+            <FaPlus className="mr-1" /> Adauga
           </button>
         </div>
       ) : (
@@ -191,12 +191,12 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
             </div>
           ))}
           <button type="button" onClick={addInstruction} className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center text-xs">
-            <FaPlus className="mr-1" /> Add Instruction
+            <FaPlus className="mr-1" /> Adauga 
           </button>
         </div>
       )}
       <div>
-        <label htmlFor="mealType" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Meal Type</label>
+        <label htmlFor="mealType" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Tip masa</label>
         <select
           id="mealType"
           name="mealType"
@@ -204,7 +204,6 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
         >
-          <option value="">Select a meal type</option>
           <option value="Mic dejun">Mic dejun</option>
           <option value="Pranz">Pranz</option>
           <option value="Cina">Cina</option>
@@ -213,15 +212,15 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
       <div className="flex justify-between items-center">
         <div className="flex space-x-2">
           <button type="button" onClick={onCancel} className="px-3 py-1 bg-gray-300 text-gray-700 rounded-full hover:bg-gray-400 flex items-center text-xs">
-            <FaTrash className="mr-1" /> Cancel
+            <FaTrash className="mr-1" /> Renunta
           </button>
           <button type="submit" className="px-3 py-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center text-xs">
-            <FaEdit className="mr-1" /> Save Recipe
+            <FaEdit className="mr-1" /> Salveaza
           </button>
         </div>
         {recipe && (
           <button type="button" onClick={() => onDelete(recipe.id)} className="px-3 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 flex items-center text-xs">
-            <FaTrash className="mr-1" /> Delete Recipe
+            <FaTrash className="mr-1" /> Sterge
           </button>
         )}
       </div>
