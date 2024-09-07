@@ -12,12 +12,12 @@ const Recipes = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Recipes</h1>
+      <h1 className="text-3xl font-bold mb-6 dark:text-white">Recipes</h1>
       <div className="masonry">
         {recipes.map((recipe) => (
           <div key={recipe.id} className="pin p-4">
-            <h2 className="text-xl font-semibold mb-2">{recipe.title}</h2>
-            <p>{recipe.description}</p>
+            <h2 className="text-xl font-semibold mb-2 dark:text-white">{recipe.title}</h2>
+            <p className="dark:text-gray-300">{recipe.description}</p>
           </div>
         ))}
       </div>

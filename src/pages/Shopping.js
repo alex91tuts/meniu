@@ -12,12 +12,12 @@ const Shopping = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Shopping List</h1>
+      <h1 className="text-3xl font-bold mb-6 dark:text-white">Shopping List</h1>
       <div className="masonry">
         {shoppingList.map((category) => (
           <div key={category.id} className="pin p-4">
-            <h2 className="text-xl font-semibold mb-2">{category.category}</h2>
-            <ul className="list-disc list-inside">
+            <h2 className="text-xl font-semibold mb-2 dark:text-white">{category.category}</h2>
+            <ul className="list-disc list-inside dark:text-gray-300">
               {category.items.map((item, index) => (
                 <li key={index}>{item}</li>
               ))}

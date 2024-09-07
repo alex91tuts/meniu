@@ -13,12 +13,12 @@ const Menu = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Menu</h1>
+      <h1 className="text-3xl font-bold mb-6 dark:text-white">Menu</h1>
       <div className="masonry">
         {weekMenu.map((item) => (
           <div key={item.id} className="pin p-4">
-            <h2 className="text-xl font-semibold mb-2">{item.day}</h2>
-            <p>{item.meal}</p>
+            <h2 className="text-xl font-semibold mb-2 dark:text-white">{item.day}</h2>
+            <p className="dark:text-gray-300">{item.meal}</p>
           </div>
         ))}
       </div>

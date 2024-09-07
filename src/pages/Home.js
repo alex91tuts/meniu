@@ -12,12 +12,12 @@ const Home = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Home</h1>
+      <h1 className="text-3xl font-bold mb-6 dark:text-white">Home</h1>
       <div className="masonry">
         {pins.map((pin) => (
           <div key={pin.id} className="pin p-4">
-            <h2 className="text-xl font-semibold mb-2">{pin.title}</h2>
-            <p>{pin.content}</p>
+            <h2 className="text-xl font-semibold mb-2 dark:text-white">{pin.title}</h2>
+            <p className="dark:text-gray-300">{pin.content}</p>
           </div>
         ))}
       </div>
