@@ -1,31 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import RecipeCard from '../components/RecipeCard';
+import recipes from '../data/recipes';
 import users from '../data/users';
 
 const Recipes = () => {
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const mealResponse = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=c');
-        const mealData = await mealResponse.json();
-
-        const updatedRecipes = mealData.meals.slice(0, 6).map((meal, index) => ({
-          id: meal.idMeal,
-          title: meal.strMeal,
-          image: `https://via.placeholder.com/300x200?text=Recipe+${index + 1}`,
-          participants: users.map(user => user.picture)
-        }));
-
-        setRecipes(updatedRecipes);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchRecipes();
-  }, []);
+  const participants = users.map(user => user.picture);
 
   return (
     <div>
@@ -36,7 +15,7 @@ const Recipes = () => {
             key={recipe.id}
             title={recipe.title}
             image={recipe.image}
-            participants={recipe.participants}
+            participants={participants}
           />
         ))}
       </div>

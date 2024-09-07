@@ -1,5 +1,7 @@
 import React from 'react';
 import RecipeCard from '../components/RecipeCard';
+import recipes from '../data/recipes';
+import users from '../data/users';
 
 const Menu = () => {
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -9,28 +11,12 @@ const Menu = () => {
   startOfWeek.setDate(currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
 
   const mealTypes = {
-    'Mic dejun': [
-      { id: 1, title: 'Omletă cu legume', description: 'Omletă pufoasă cu ardei, ceapă și roșii', image: 'https://via.placeholder.com/300x200?text=Omleta+cu+legume' },
-      { id: 2, title: 'Terci de ovăz', description: 'Terci cremos cu fructe de pădure și miere', image: 'https://via.placeholder.com/300x200?text=Terci+de+ovaz' },
-      { id: 3, title: 'Toast cu avocado', description: 'Pâine prăjită cu avocado și ou poșat', image: 'https://via.placeholder.com/300x200?text=Toast+cu+avocado' },
-    ],
-    'Pranz': [
-      { id: 1, title: 'Salată Caesar', description: 'Salată proaspătă cu pui la grătar și dressing Caesar', image: 'https://via.placeholder.com/300x200?text=Salata+Caesar' },
-      { id: 2, title: 'Supă de linte', description: 'Supă consistentă de linte cu legume', image: 'https://via.placeholder.com/300x200?text=Supa+de+linte' },
-      { id: 3, title: 'Wrap cu falafel', description: 'Wrap cu falafel, hummus și legume proaspete', image: 'https://via.placeholder.com/300x200?text=Wrap+cu+falafel' },
-    ],
-    'Cina': [
-      { id: 1, title: 'Somon la cuptor', description: 'File de somon la cuptor cu legume la grătar', image: 'https://via.placeholder.com/300x200?text=Somon+la+cuptor' },
-      { id: 2, title: 'Paste Primavera', description: 'Paste cu un amestec colorat de legume de primăvară', image: 'https://via.placeholder.com/300x200?text=Paste+Primavera' },
-      { id: 3, title: 'Pui Tikka Masala', description: 'Pui aromat în sos de roșii cu condimente indiene', image: 'https://via.placeholder.com/300x200?text=Pui+Tikka+Masala' },
-    ],
+    'Mic dejun': recipes.filter(recipe => recipe.mealType === 'Mic dejun'),
+    'Pranz': recipes.filter(recipe => recipe.mealType === 'Pranz'),
+    'Cina': recipes.filter(recipe => recipe.mealType === 'Cina'),
   };
 
-  const participants = [
-    'https://randomuser.me/api/portraits/women/1.jpg',
-    'https://randomuser.me/api/portraits/men/1.jpg',
-    'https://randomuser.me/api/portraits/men/2.jpg'
-  ];
+  const participants = users.map(user => user.picture);
 
   return (
     <div>
