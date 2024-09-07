@@ -100,11 +100,12 @@ const Menu = () => {
               <button
                 key={mealType}
                 onClick={() => setSelectedMealType(mealType)}
-                className={`flex items-center px-4 py-2 rounded-full ${
+                className={`flex items-center px-4 py-2 rounded-sm ${
                   selectedMealType === mealType
                     ? 'bg-red-500 text-white'
                     : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
                 }`}
+                style={{ borderRadius: '3px' }}
               >
                 {getMealTypeIcon(mealType)}
                 <span className="ml-2">{mealType}</span>
@@ -114,7 +115,7 @@ const Menu = () => {
           <div className="mb-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold dark:text-white">{selectedMealType}</h2>
-              <button className="text-2xl font-bold text-red-500 dark:text-red-400">+</button>
+              <button className="text-2xl font-bold text-red-500 dark:text-red-400 px-2 py-1 rounded-sm" style={{ borderRadius: '3px' }}>+</button>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {mealTypes[selectedMealType].map((recipe) => (
