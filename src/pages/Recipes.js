@@ -3,20 +3,23 @@ import RecipeCard from '../components/RecipeCard';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
+  const users = [
+    { name: 'Mariana', picture: 'https://randomuser.me/api/portraits/women/1.jpg' },
+    { name: 'Alex', picture: 'https://randomuser.me/api/portraits/men/1.jpg' },
+    { name: 'Matei', picture: 'https://randomuser.me/api/portraits/kids/1.jpg' }
+  ];
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const mealResponse = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=c');
         const mealData = await mealResponse.json();
-        const userResponse = await fetch('https://randomuser.me/api/?results=20');
-        const userData = await userResponse.json();
 
-        const updatedRecipes = mealData.meals.slice(0, 6).map((meal, index) => ({
+        const updatedRecipes = mealData.meals.slice(0, 6).map((meal) => ({
           id: meal.idMeal,
           title: meal.strMeal,
           image: meal.strMealThumb,
-          participants: userData.results.slice(index * 3, (index + 1) * 3).map(user => user.picture.thumbnail)
+          participants: users.map(user => user.picture)
         }));
 
         setRecipes(updatedRecipes);
