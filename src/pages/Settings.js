@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Settings = () => {
+  const [profiles, setProfiles] = useState([]);
+  const [newProfile, setNewProfile] = useState({ name: '', picture: '' });
+
+  const handleInputChange = (e) => {
+    setNewProfile({ ...newProfile, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newProfile.name && newProfile.picture) {
+      setProfiles([...profiles, newProfile]);
+      setNewProfile({ name: '', picture: '' });
+    }
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6 dark:text-white">Settings</h1>
@@ -20,6 +35,38 @@ const Settings = () => {
         <div className="pin p-4">
           <h2 className="text-xl font-semibold mb-2 dark:text-white">Privacy</h2>
           <p className="dark:text-gray-300">Adjust your privacy settings.</p>
+        </div>
+        <div className="pin p-4">
+          <h2 className="text-xl font-semibold mb-2 dark:text-white">Profiles</h2>
+          <form onSubmit={handleSubmit} className="mb-4">
+            <input
+              type="text"
+              name="name"
+              value={newProfile.name}
+              onChange={handleInputChange}
+              placeholder="Name"
+              className="w-full p-2 mb-2 border rounded dark:bg-gray-700 dark:text-white"
+            />
+            <input
+              type="text"
+              name="picture"
+              value={newProfile.picture}
+              onChange={handleInputChange}
+              placeholder="Picture URL"
+              className="w-full p-2 mb-2 border rounded dark:bg-gray-700 dark:text-white"
+            />
+            <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              Add Profile
+            </button>
+          </form>
+          <div className="grid grid-cols-2 gap-2">
+            {profiles.map((profile, index) => (
+              <div key={index} className="flex items-center p-2 border rounded dark:border-gray-600">
+                <img src={profile.picture} alt={profile.name} className="w-10 h-10 rounded-full mr-2" />
+                <span className="dark:text-white">{profile.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
