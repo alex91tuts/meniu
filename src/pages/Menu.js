@@ -34,18 +34,22 @@ const Menu = () => {
           );
         })}
       </div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold dark:text-white">Mic dejun</h2>
-        <button className="text-2xl font-bold text-red-500 dark:text-red-400">+</button>
-      </div>
-      <div className="masonry">
-        {weekMenu.map((item) => (
-          <div key={item.id} className="pin p-4">
-            <h2 className="text-xl font-semibold mb-2 dark:text-white">{item.day}</h2>
-            <p className="dark:text-gray-300">{item.meal}</p>
+      {['Mic dejun', 'Pranz', 'Cina'].map((mealType) => (
+        <div key={mealType} className="mb-8">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold dark:text-white">{mealType}</h2>
+            <button className="text-2xl font-bold text-red-500 dark:text-red-400">+</button>
           </div>
-        ))}
-      </div>
+          <div className="masonry">
+            {weekMenu.map((item) => (
+              <div key={`${mealType}-${item.id}`} className="pin p-4">
+                <h2 className="text-xl font-semibold mb-2 dark:text-white">{item.day}</h2>
+                <p className="dark:text-gray-300">{item.meal}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
