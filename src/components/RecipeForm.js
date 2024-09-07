@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 
-const RecipeForm = ({ recipe, onSave, onCancel }) => {
+const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -138,9 +139,21 @@ const RecipeForm = ({ recipe, onSave, onCancel }) => {
           <option value="Cina">Cina</option>
         </select>
       </div>
-      <div className="flex justify-end space-x-2">
-        <button type="button" onClick={onCancel} className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
-        <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Save Recipe</button>
+      <div className="flex justify-between items-center">
+        <div className="flex space-x-2">
+          <button type="button" onClick={onCancel} className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
+          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Save Recipe</button>
+        </div>
+        {recipe && (
+          <div className="flex space-x-2">
+            <button type="button" onClick={() => onDelete(recipe.id)} className="text-red-500 hover:text-red-700">
+              <FaTrash className="text-xl" />
+            </button>
+            <button type="button" className="text-blue-500 hover:text-blue-700">
+              <FaEdit className="text-xl" />
+            </button>
+          </div>
+        )}
       </div>
     </form>
   );

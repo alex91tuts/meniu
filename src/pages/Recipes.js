@@ -7,20 +7,43 @@ import users from '../data/users';
 const Recipes = () => {
   const [showForm, setShowForm] = useState(false);
   const [recipeList, setRecipeList] = useState(recipes);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
   const participants = users.map(user => user.picture);
 
   const handleAddRecipe = () => {
+    setSelectedRecipe(null);
+    setShowForm(true);
+  };
+
+  const handleEditRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
     setShowForm(true);
   };
 
   const handleSaveRecipe = (newRecipe) => {
-    const updatedRecipes = [...recipeList, { ...newRecipe, id: recipeList.length + 1 }];
-    setRecipeList(updatedRecipes);
+    if (selectedRecipe) {
+      const updatedRecipes = recipeList.map(recipe => 
+        recipe.id === selectedRecipe.id ? { ...newRecipe, id: selectedRecipe.id } : recipe
+      );
+      setRecipeList(updatedRecipes);
+    } else {
+      const updatedRecipes = [...recipeList, { ...newRecipe, id: recipeList.length + 1 }];
+      setRecipeList(updatedRecipes);
+    }
     setShowForm(false);
+    setSelectedRecipe(null);
   };
 
   const handleCancelForm = () => {
     setShowForm(false);
+    setSelectedRecipe(null);
+  };
+
+  const handleDeleteRecipe = (id) => {
+    const updatedRecipes = recipeList.filter(recipe => recipe.id !== id);
+    setRecipeList(updatedRecipes);
+    setShowForm(false);
+    setSelectedRecipe(null);
   };
 
   return (
@@ -35,7 +58,12 @@ const Recipes = () => {
         </button>
       </div>
       {showForm ? (
-        <RecipeForm onSave={handleSaveRecipe} onCancel={handleCancelForm} />
+        <RecipeForm 
+          recipe={selectedRecipe} 
+          onSave={handleSaveRecipe} 
+          onCancel={handleCancelForm} 
+          onDelete={handleDeleteRecipe}
+        />
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {recipeList.map((recipe) => (
@@ -44,6 +72,7 @@ const Recipes = () => {
               title={recipe.title}
               image={recipe.image}
               participants={participants}
+              onClick={() => handleEditRecipe(recipe)}
             />
           ))}
         </div>
