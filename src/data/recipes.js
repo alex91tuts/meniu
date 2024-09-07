@@ -3,7 +3,7 @@ const recipes = [
     id: 1,
     title: 'Omletă cu legume',
     description: 'Omletă pufoasă cu ardei, ceapă și roșii',
-    image: 'https://source.unsplash.com/random/?omelette',
+    image: 'https://source.unsplash.com/random/?vegetable,omelette',
     ingredients: ['3 ouă', '1/4 ardei roșu', '1/4 ceapă', '1 roșie mică', 'Sare', 'Piper'],
     instructions: [
       'Bateți ouăle într-un bol cu sare și piper.',
@@ -18,7 +18,7 @@ const recipes = [
     id: 2,
     title: 'Salată de vinete',
     description: 'Salată tradițională românească de vinete coapte',
-    image: 'https://source.unsplash.com/random/?eggplant,salad',
+    image: 'https://source.unsplash.com/random/?eggplant,spread',
     ingredients: ['3 vinete mari', '1 ceapă', 'Ulei de floarea soarelui', 'Sare'],
     instructions: [
       'Coaceți vinetele pe grătar sau în cuptor până se înmoaie.',
@@ -33,7 +33,7 @@ const recipes = [
     id: 3,
     title: 'Sarmale',
     description: 'Sarmale tradiționale românești cu carne de porc și orez',
-    image: 'https://source.unsplash.com/random/?stuffed,cabbage',
+    image: 'https://source.unsplash.com/random/?stuffed,cabbage,rolls',
     ingredients: ['Varză murată', 'Carne tocată de porc', 'Orez', 'Ceapă', 'Morcov', 'Bulion', 'Cimbru', 'Sare', 'Piper'],
     instructions: [
       'Amestecați carnea tocată cu orezul, ceapa călită, morcovul ras și condimentele.',
