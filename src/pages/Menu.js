@@ -16,7 +16,7 @@ const Menu = () => {
         border-radius: 10px;
         transition: box-shadow 0.3s ease;
       }
-      .menu-button:active {
+      .menu-button.active {
         box-shadow: 0 0 15px -3px rgb(255, 194, 13);
       }
     `;
@@ -121,7 +121,7 @@ const Menu = () => {
                 onClick={() => setSelectedMealType(mealType)}
                 className={`flex items-center px-4 py-2 focus:outline-none menu-button ${
                   selectedMealType === mealType
-                    ? 'text-white'
+                    ? 'text-white active'
                     : 'text-gray-700 dark:text-gray-300'
                 }`}
                 style={{ 
