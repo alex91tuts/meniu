@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Settings = () => {
-  const [profiles, setProfiles] = useState([]);
+  const [profiles, setProfiles] = useState([
+    { name: 'Mariana', picture: 'https://randomuser.me/api/portraits/women/1.jpg' },
+    { name: 'Alex', picture: 'https://randomuser.me/api/portraits/men/1.jpg' },
+    { name: 'Matei', picture: 'https://randomuser.me/api/portraits/men/2.jpg' }
+  ]);
   const [newProfile, setNewProfile] = useState({ name: '', picture: '' });
+
+  useEffect(() => {
+    // Load profiles from localStorage on component mount
+    const savedProfiles = localStorage.getItem('profiles');
+    if (savedProfiles) {
+      setProfiles(JSON.parse(savedProfiles));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save profiles to localStorage whenever it changes
+    localStorage.setItem('profiles', JSON.stringify(profiles));
+  }, [profiles]);
 
   const handleInputChange = (e) => {
     setNewProfile({ ...newProfile, [e.target.name]: e.target.value });
@@ -14,6 +31,11 @@ const Settings = () => {
       setProfiles([...profiles, newProfile]);
       setNewProfile({ name: '', picture: '' });
     }
+  };
+
+  const handleDeleteProfile = (index) => {
+    const updatedProfiles = profiles.filter((_, i) => i !== index);
+    setProfiles(updatedProfiles);
   };
 
   return (
@@ -61,9 +83,17 @@ const Settings = () => {
           </form>
           <div className="grid grid-cols-2 gap-2">
             {profiles.map((profile, index) => (
-              <div key={index} className="flex items-center p-2 border rounded dark:border-gray-600">
-                <img src={profile.picture} alt={profile.name} className="w-10 h-10 rounded-full mr-2" />
-                <span className="dark:text-white">{profile.name}</span>
+              <div key={index} className="flex items-center justify-between p-2 border rounded dark:border-gray-600">
+                <div className="flex items-center">
+                  <img src={profile.picture} alt={profile.name} className="w-10 h-10 rounded-full mr-2" />
+                  <span className="dark:text-white">{profile.name}</span>
+                </div>
+                <button
+                  onClick={() => handleDeleteProfile(index)}
+                  className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-600"
+                >
+                  Delete
+                </button>
               </div>
             ))}
           </div>
