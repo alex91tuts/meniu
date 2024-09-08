@@ -6,7 +6,7 @@ const RecipeView = ({ recipe, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white dark:bg-gray-800 w-full max-w-2xl p-6 rounded-lg shadow-xl overflow-y-auto max-h-[90vh]">
+      <div className="bg-white dark:bg-gray-800 w-full h-full p-6 overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold dark:text-white">{recipe.title}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
