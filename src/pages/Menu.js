@@ -50,7 +50,16 @@ const Menu = () => {
     try {
       const menuItemsWithProfiles = await getMenuItemsWithProfiles(startOfWeek.toISOString().split('T')[0]);
       console.log('Loaded menu items:', menuItemsWithProfiles);
-      setWeeklyMenu(menuItemsWithProfiles);
+      // Group menu items by date and meal type
+      const groupedMenuItems = menuItemsWithProfiles.reduce((acc, item) => {
+        const key = `${item.date}-${item.mealType}`;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(item);
+        return acc;
+      }, {});
+      setWeeklyMenu(groupedMenuItems);
     } catch (error) {
       console.error('Error loading menu items:', error);
     }
@@ -224,12 +233,14 @@ const Menu = () => {
               </button>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {weeklyMenu
-                .filter(item => 
-                  new Date(item.date).getDay() === selectedDay && 
-                  item.mealType === selectedMealType
-                )
-                .map((menuItem) => (
+              {(() => {
+                const currentDate = new Date(startOfWeek);
+                currentDate.setDate(currentDate.getDate() + selectedDay);
+                const dateString = currentDate.toISOString().split('T')[0];
+                const key = `${dateString}-${selectedMealType}`;
+                const menuItems = weeklyMenu[key] || [];
+                
+                return menuItems.map((menuItem) => (
                   <RecipeCard
                     key={menuItem.id}
                     title={menuItem.recipe.title}
@@ -238,8 +249,8 @@ const Menu = () => {
                     profiles={menuItem.profiles}
                     onClick={() => handleEditRecipe(menuItem.recipe)}
                   />
-                ))
-              }
+                ));
+              })()}
             </div>
           </div>
         </>
