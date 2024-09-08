@@ -175,7 +175,6 @@ const Menu = () => {
                   image={recipe.image}
                   participants={participants}
                   onClick={() => handleEditRecipe(recipe)}
-                  onAddToMenu={() => handleAddToWeeklyMenu(recipe)}
                 />
               ))}
             </div>
