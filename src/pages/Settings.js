@@ -98,7 +98,7 @@ const Settings = () => {
       {showCropper && (
         <ImageCropper
           image={cropImage}
-          onCropComplete={handleCropComplete}
+          onCropFinish={handleCropComplete}
           onCancel={() => setShowCropper(false)}
         />
       )}

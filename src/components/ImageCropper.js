@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 
-const ImageCropper = ({ image, onCropComplete, onCancel }) => {
+const ImageCropper = ({ image, onCropFinish, onCancel }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -60,7 +60,7 @@ const ImageCropper = ({ image, onCropComplete, onCancel }) => {
   const handleCrop = async () => {
     try {
       const croppedImage = await getCroppedImg(image, croppedAreaPixels);
-      onCropComplete(croppedImage);
+      onCropFinish(croppedImage);
     } catch (e) {
       console.error(e);
     }
