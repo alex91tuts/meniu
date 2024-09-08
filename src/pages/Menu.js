@@ -20,7 +20,7 @@ const Menu = () => {
   const [weeklyMenu, setWeeklyMenu] = useState([]);
   const [weekOffset, setWeekOffset] = useState(0);
 
-  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const weekDays = ['Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sam', 'Dum'];
   const currentDate = new Date();
   const startOfWeek = new Date(currentDate);
   startOfWeek.setDate(currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 : 1) + weekOffset * 7);
