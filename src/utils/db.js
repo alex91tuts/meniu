@@ -1,9 +1,10 @@
 import { openDB } from 'idb';
 
 const DB_NAME = 'RecipeDB';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 const RECIPE_STORE = 'recipes';
 const PERSON_STORE = 'persons';
+const MENU_ITEM_STORE = 'menuItems';
 
 const dbPromise = openDB(DB_NAME, DB_VERSION, {
   upgrade(db, oldVersion, newVersion, transaction) {
@@ -12,6 +13,10 @@ const dbPromise = openDB(DB_NAME, DB_VERSION, {
     }
     if (!db.objectStoreNames.contains(PERSON_STORE)) {
       db.createObjectStore(PERSON_STORE, { keyPath: 'id', autoIncrement: true });
+    }
+    if (!db.objectStoreNames.contains(MENU_ITEM_STORE)) {
+      const menuItemStore = db.createObjectStore(MENU_ITEM_STORE, { keyPath: 'id', autoIncrement: true });
+      menuItemStore.createIndex('dateIndex', 'date');
     }
   },
 });
@@ -58,6 +63,50 @@ export async function updatePerson(person) {
 export async function deletePerson(id) {
   const db = await dbPromise;
   return db.delete(PERSON_STORE, id);
+}
+
+// Menu Item functions
+export async function addMenuItem(menuItem) {
+  const db = await dbPromise;
+  return db.add(MENU_ITEM_STORE, {
+    ...menuItem,
+    profileIds: menuItem.profiles.map(profile => profile.id)
+  });
+}
+
+export async function getMenuItemsWithProfiles(date) {
+  const db = await dbPromise;
+  const tx = db.transaction([MENU_ITEM_STORE, PERSON_STORE, RECIPE_STORE], 'readonly');
+  const menuItemStore = tx.objectStore(MENU_ITEM_STORE);
+  const personStore = tx.objectStore(PERSON_STORE);
+  const recipeStore = tx.objectStore(RECIPE_STORE);
+
+  const menuItems = await menuItemStore.index('dateIndex').getAll(IDBKeyRange.only(date));
+
+  const menuItemsWithDetails = await Promise.all(menuItems.map(async (item) => {
+    const profiles = await Promise.all(item.profileIds.map(id => personStore.get(id)));
+    const recipe = await recipeStore.get(item.recipeId);
+    return {
+      ...item,
+      profiles,
+      recipe
+    };
+  }));
+
+  return menuItemsWithDetails;
+}
+
+export async function updateMenuItem(menuItem) {
+  const db = await dbPromise;
+  return db.put(MENU_ITEM_STORE, {
+    ...menuItem,
+    profileIds: menuItem.profiles.map(profile => profile.id)
+  });
+}
+
+export async function deleteMenuItem(id) {
+  const db = await dbPromise;
+  return db.delete(MENU_ITEM_STORE, id);
 }
 
 // Helper function to compress base64 image

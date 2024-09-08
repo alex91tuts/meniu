@@ -3,8 +3,7 @@ import { ThemeContext } from '../context/ThemeContext';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
 import SearchModal from '../components/SearchModal';
-import { getAllRecipes, addRecipe, updateRecipe, deleteRecipe } from '../utils/db';
-import users from '../data/users';
+import { getAllRecipes, addRecipe, updateRecipe, deleteRecipe, addMenuItem, getMenuItemsWithProfiles, updateMenuItem, deleteMenuItem } from '../utils/db';
 import { FaCoffee, FaUtensils, FaMoon, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const Menu = () => {
@@ -15,7 +14,7 @@ const Menu = () => {
   const [recipeList, setRecipeList] = useState([]);
   const [selectedMealType, setSelectedMealType] = useState('Mic dejun');
   const [selectedDay, setSelectedDay] = useState(0);
-  const [weeklyMenu, setWeeklyMenu] = useState({});
+  const [weeklyMenu, setWeeklyMenu] = useState([]);
   const [weekOffset, setWeekOffset] = useState(0);
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -25,6 +24,7 @@ const Menu = () => {
 
   useEffect(() => {
     loadRecipes();
+    loadMenuItems();
     const style = document.createElement('style');
     style.textContent = `
       .menu-button {
@@ -39,11 +39,16 @@ const Menu = () => {
     return () => {
       document.head.removeChild(style);
     };
-  }, []);
+  }, [weekOffset]);
 
   const loadRecipes = async () => {
     const recipes = await getAllRecipes();
     setRecipeList(recipes);
+  };
+
+  const loadMenuItems = async () => {
+    const menuItemsWithProfiles = await getMenuItemsWithProfiles(startOfWeek.toISOString().split('T')[0]);
+    setWeeklyMenu(menuItemsWithProfiles);
   };
 
   const mealTypes = {
@@ -51,8 +56,6 @@ const Menu = () => {
     'Pranz': recipeList.filter(recipe => recipe.mealType === 'Pranz'),
     'Cina': recipeList.filter(recipe => recipe.mealType === 'Cina'),
   };
-
-  const participants = users.map(user => user.picture);
 
   const handleEditRecipe = (recipe) => {
     setSelectedRecipe(recipe);
@@ -95,17 +98,15 @@ const Menu = () => {
     }
   };
 
-  const handleAddToWeeklyMenu = (recipe, selectedProfiles) => {
-    setWeeklyMenu(prevMenu => ({
-      ...prevMenu,
-      [selectedDay]: {
-        ...prevMenu[selectedDay],
-        [selectedMealType]: [
-          ...(prevMenu[selectedDay]?.[selectedMealType] || []),
-          { ...recipe, profiles: selectedProfiles }
-        ]
-      }
-    }));
+  const handleAddToWeeklyMenu = async (recipe, selectedProfiles) => {
+    const menuItem = {
+      date: new Date(startOfWeek.getTime() + selectedDay * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      mealType: selectedMealType,
+      recipeId: recipe.id,
+      profiles: selectedProfiles
+    };
+    await addMenuItem(menuItem);
+    await loadMenuItems();
     setShowSearchModal(false);
   };
 
@@ -211,20 +212,22 @@ const Menu = () => {
               </button>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {weeklyMenu[selectedDay]?.[selectedMealType]?.map((recipe, index) => (
-                <RecipeCard
-                  key={`${selectedMealType}-${recipe.id}-${index}`}
-                  title={recipe.title}
-                  image={recipe.image}
-                  mealType={recipe.mealType}
-                  profiles={recipe.profiles ? recipe.profiles.map(profile => ({
-                    id: profile.id,
-                    name: profile.name,
-                    picture: profile.picture
-                  })) : []}
-                  onClick={() => handleEditRecipe(recipe)}
-                />
-              ))}
+              {weeklyMenu
+                .filter(item => 
+                  new Date(item.date).getDay() === selectedDay && 
+                  item.mealType === selectedMealType
+                )
+                .map((menuItem) => (
+                  <RecipeCard
+                    key={menuItem.id}
+                    title={menuItem.recipe.title}
+                    image={menuItem.recipe.image}
+                    mealType={menuItem.recipe.mealType}
+                    profiles={menuItem.profiles}
+                    onClick={() => handleEditRecipe(menuItem.recipe)}
+                  />
+                ))
+              }
             </div>
           </div>
         </>
