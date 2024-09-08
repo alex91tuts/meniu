@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
-import users from '../data/users';
 import { addRecipe, getAllRecipes, updateRecipe, deleteRecipe } from '../utils/db';
 
 const Recipes = () => {
   const [showForm, setShowForm] = useState(false);
   const [recipeList, setRecipeList] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const participants = users.map(user => user.picture);
 
   useEffect(() => {
     loadRecipes();
@@ -17,7 +15,6 @@ const Recipes = () => {
   const loadRecipes = async () => {
     try {
       const recipes = await getAllRecipes();
-      console.log('Loaded recipes:', recipes);
       setRecipeList(recipes);
     } catch (error) {
       console.error('Error loading recipes:', error);
@@ -83,7 +80,7 @@ const Recipes = () => {
               key={recipe.id}
               title={recipe.title}
               image={recipe.image}
-              participants={participants}
+              mealType={recipe.mealType}
               onClick={() => handleEditRecipe(recipe)}
             />
           ))}
