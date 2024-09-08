@@ -28,6 +28,14 @@ const RecipeView = ({ recipe, onClose }) => {
         <h2 className="text-2xl font-bold dark:text-white text-center mb-4">{recipe.title}</h2>
         <div className="px-6">
           <p className="text-gray-600 dark:text-gray-300 mb-4">{recipe.description}</p>
+          <div className="flex justify-between mb-4">
+            <p className="text-sm dark:text-gray-300">
+              <span className="font-bold">Timp de gatire:</span> {recipe.cookingTime} min
+            </p>
+            <p className="text-sm dark:text-gray-300">
+              <span className="font-bold">Dificultate:</span> {recipe.difficulty}
+            </p>
+          </div>
           <SwitchButton
             activeTab={activeTab}
             setActiveTab={setActiveTab}

@@ -9,7 +9,9 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
     image: '',
     ingredients: [{ ingredient: '', quantity: '', quantityType: 'grams' }],
     instructions: [],
-    mealType: ''
+    mealType: '',
+    cookingTime: '',
+    difficulty: 'usor'
   });
   const [showIngredients, setShowIngredients] = useState(true);
 
@@ -234,6 +236,32 @@ const RecipeForm = ({ recipe, onSave, onCancel, onDelete }) => {
           <option value="Mic dejun">Mic dejun</option>
           <option value="Pranz">Pranz</option>
           <option value="Cina">Cina</option>
+        </select>
+      </div>
+      <div>
+        <label htmlFor="cookingTime" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Timp de gatire (min)</label>
+        <input
+          type="number"
+          id="cookingTime"
+          name="cookingTime"
+          value={formData.cookingTime}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+          min="0"
+        />
+      </div>
+      <div>
+        <label htmlFor="difficulty" className="block text-xs font-medium text-gray-700 dark:text-gray-300">Dificultate</label>
+        <select
+          id="difficulty"
+          name="difficulty"
+          value={formData.difficulty}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm p-2"
+        >
+          <option value="usor">Usor</option>
+          <option value="mediu">Mediu</option>
+          <option value="greu">Greu</option>
         </select>
       </div>
       <div className="flex justify-between items-center">
