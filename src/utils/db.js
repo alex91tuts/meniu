@@ -1,7 +1,7 @@
 import { openDB } from 'idb';
 
 const DB_NAME = 'RecipeDB';
-const DB_VERSION = 4;
+const DB_VERSION = 5; // Increment the DB_VERSION
 const RECIPE_STORE = 'recipes';
 const PERSON_STORE = 'persons';
 const MENU_ITEM_STORE = 'menuItems';
@@ -20,9 +20,10 @@ const dbPromise = openDB(DB_NAME, DB_VERSION, {
       menuItemStore.createIndex('dateIndex', 'date');
     }
     if (!db.objectStoreNames.contains(SHOPPING_LIST_STORE)) {
-      const shoppingListStore = db.createObjectStore(SHOPPING_LIST_STORE, { keyPath: 'id', autoIncrement: true });
-      shoppingListStore.createIndex('weekStartIndex', 'weekStart');
+      const shoppingListStore = db.createObjectStore(SHOPPING_LIST_STORE, { keyPath: 'weekStart' });
+      shoppingListStore.createIndex('weekStartIndex', 'weekStart', { unique: true });
     }
+    console.log('Database upgrade completed. New version:', newVersion);
   },
 });
 
