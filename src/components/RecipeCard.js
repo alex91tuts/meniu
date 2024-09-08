@@ -35,7 +35,7 @@ const RecipeCard = ({ title, image, mealType, onClick, onAdd, showAddButton, pro
             <div className="flex -space-x-2 overflow-hidden">
               {profiles.map((profile, index) => (
                 <img
-                  key={index}
+                  key={profile.id}
                   className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
                   src={profile.picture}
                   alt={profile.name || 'Profile'}
