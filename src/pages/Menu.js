@@ -156,7 +156,7 @@ const Menu = () => {
           </div>
           <div className="mb-8">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold dark:text-white">{selectedMealType}</h2>
+              <h2 className="text-2xl font-bold dark:text-white">Adaugă</h2>
               <button 
                 onClick={() => setShowForm(true)}
                 className="text-2xl font-bold px-2 py-1 focus:outline-none menu-button" 
@@ -179,24 +179,6 @@ const Menu = () => {
                 />
               ))}
             </div>
-          </div>
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold dark:text-white mb-4">Weekly Menu</h2>
-            {weekDays.map((day, index) => (
-              <div key={day} className="mb-4">
-                <h3 className="text-xl font-semibold dark:text-white">{day}</h3>
-                {Object.keys(mealTypes).map((mealType) => (
-                  <div key={mealType} className="ml-4">
-                    <h4 className="text-lg font-medium dark:text-white">{mealType}</h4>
-                    <ul className="list-disc list-inside">
-                      {weeklyMenu[index]?.[mealType]?.map((recipe, recipeIndex) => (
-                        <li key={recipeIndex}>{recipe.title}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            ))}
           </div>
         </>
       )}
