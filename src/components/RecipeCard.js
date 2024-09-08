@@ -33,7 +33,7 @@ const RecipeCard = ({ title, image, mealType, onClick, onAdd, onDelete, showAddB
             <span className="text-sm text-gray-500">{mealType}</span>
           </div>
           {profiles && profiles.length > 0 && (
-            <div className="flex -space-x-2 overflow-hidden">
+            <div className="flex -space-x-2 overflow-hidden rounded-full">
               {profiles.map((profile) => (
                 <img
                   key={profile.id}
