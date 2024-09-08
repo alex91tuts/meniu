@@ -59,7 +59,12 @@ const Menu = () => {
 
   const loadMenuItems = async () => {
     try {
-      const menuItemsWithProfiles = await getMenuItemsWithProfiles(startOfWeek.toISOString().split('T')[0]);
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      const menuItemsWithProfiles = await getMenuItemsWithProfiles(
+        startOfWeek.toISOString().split('T')[0],
+        endOfWeek.toISOString().split('T')[0]
+      );
       console.log('Loaded menu items:', menuItemsWithProfiles);
       // Group menu items by date and meal type
       const groupedMenuItems = menuItemsWithProfiles.reduce((acc, item) => {

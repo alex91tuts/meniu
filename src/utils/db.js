@@ -85,7 +85,12 @@ export async function getMenuItemsWithProfiles(startDate, endDate) {
   const recipeStore = tx.objectStore(RECIPE_STORE);
 
   console.log('Fetching menu items for date range:', startDate, 'to', endDate);
-  const menuItems = await menuItemStore.index('dateIndex').getAll(IDBKeyRange.bound(startDate, endDate));
+  let menuItems;
+  if (startDate && endDate) {
+    menuItems = await menuItemStore.index('dateIndex').getAll(IDBKeyRange.bound(startDate, endDate));
+  } else {
+    menuItems = await menuItemStore.getAll();
+  }
   console.log('Retrieved menu items:', menuItems);
 
   const menuItemsWithDetails = await Promise.all(menuItems.map(async (item) => {
