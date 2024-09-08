@@ -1,7 +1,8 @@
-export function generateShoppingList(menuItems, numberOfPeople) {
+export function generateShoppingList(menuItems) {
   const ingredientMap = new Map();
 
   menuItems.forEach(menuItem => {
+    const numberOfPeople = menuItem.profiles.length;
     menuItem.recipe.ingredients.forEach(ingredient => {
       const key = `${ingredient.ingredient.toLowerCase()}-${ingredient.quantityType}`;
       const currentQuantity = ingredientMap.get(key) || { 

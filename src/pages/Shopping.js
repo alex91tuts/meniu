@@ -6,18 +6,17 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 const Shopping = () => {
   const [shoppingList, setShoppingList] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
-  const [numberOfPeople, setNumberOfPeople] = useState(1);
 
   useEffect(() => {
     loadShoppingList();
-  }, [startDate, numberOfPeople]);
+  }, [startDate]);
 
   const loadShoppingList = async () => {
     try {
       const endDate = new Date(startDate);
       endDate.setDate(endDate.getDate() + 6);
       const menuItems = await getMenuItemsWithProfiles(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
-      const generatedList = generateShoppingList(menuItems, numberOfPeople);
+      const generatedList = generateShoppingList(menuItems);
       setShoppingList(generatedList);
     } catch (error) {
       console.error('Error loading shopping list:', error);
@@ -54,17 +53,6 @@ const Shopping = () => {
           >
             <FaChevronRight className="text-gray-600 dark:text-gray-300" />
           </button>
-        </div>
-        <div>
-          <label htmlFor="numberOfPeople" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Number of People</label>
-          <input
-            type="number"
-            id="numberOfPeople"
-            value={numberOfPeople}
-            onChange={(e) => setNumberOfPeople(parseInt(e.target.value))}
-            min="1"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          />
         </div>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
