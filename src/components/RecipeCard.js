@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
+import { FaTrash } from 'react-icons/fa';
 
-const RecipeCard = ({ title, image, mealType, onClick, onAdd, showAddButton, profiles = [] }) => {
+const RecipeCard = ({ title, image, mealType, onClick, onAdd, onDelete, showAddButton, profiles = [] }) => {
   const { theme } = useContext(ThemeContext);
 
   const getMealTypeIcon = (mealType) => {
@@ -54,6 +55,17 @@ const RecipeCard = ({ title, image, mealType, onClick, onAdd, showAddButton, pro
           }}
         >
           +
+        </button>
+      )}
+      {onDelete && (
+        <button
+          className="absolute top-0 right-0 bg-red-500 text-white w-6 h-6 flex items-center justify-center rounded-bl"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+        >
+          <FaTrash size={12} />
         </button>
       )}
     </div>

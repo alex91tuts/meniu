@@ -4,6 +4,7 @@ import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
 import SearchModal from '../components/SearchModal';
 import { getAllRecipes, addRecipe, updateRecipe, deleteRecipe, addMenuItem, getMenuItemsWithProfiles, updateMenuItem, deleteMenuItem } from '../utils/db';
+import { FaTrash } from 'react-icons/fa';
 import { FaCoffee, FaUtensils, FaMoon, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const Menu = () => {
@@ -97,6 +98,15 @@ const Menu = () => {
     await loadRecipes();
     setShowForm(false);
     setSelectedRecipe(null);
+  };
+
+  const handleDeleteMenuItem = async (menuItemId) => {
+    try {
+      await deleteMenuItem(menuItemId);
+      await loadMenuItems();
+    } catch (error) {
+      console.error('Error deleting menu item:', error);
+    }
   };
 
   const getMealTypeIcon = (mealType) => {
@@ -248,6 +258,7 @@ const Menu = () => {
                     mealType={menuItem.recipe.mealType}
                     profiles={menuItem.profiles}
                     onClick={() => handleEditRecipe(menuItem.recipe)}
+                    onDelete={() => handleDeleteMenuItem(menuItem.id)}
                   />
                 ));
               })()}
