@@ -103,8 +103,9 @@ const Menu = () => {
       date: new Date(startOfWeek.getTime() + selectedDay * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       mealType: selectedMealType,
       recipeId: recipe.id,
-      profiles: selectedProfiles
+      profiles: selectedProfiles || []
     };
+    console.log('Adding menu item:', menuItem);  // Add this line for debugging
     await addMenuItem(menuItem);
     await loadMenuItems();
     setShowSearchModal(false);

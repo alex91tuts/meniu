@@ -70,7 +70,7 @@ export async function addMenuItem(menuItem) {
   const db = await dbPromise;
   return db.add(MENU_ITEM_STORE, {
     ...menuItem,
-    profileIds: menuItem.profiles.map(profile => profile.id)
+    profileIds: menuItem.profiles ? menuItem.profiles.map(profile => profile.id) : []
   });
 }
 
