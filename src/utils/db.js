@@ -68,10 +68,13 @@ export async function deletePerson(id) {
 // Menu Item functions
 export async function addMenuItem(menuItem) {
   const db = await dbPromise;
-  return db.add(MENU_ITEM_STORE, {
+  console.log('Adding menu item to database:', menuItem);
+  const result = await db.add(MENU_ITEM_STORE, {
     ...menuItem,
     profileIds: menuItem.profiles ? menuItem.profiles.map(profile => profile.id) : []
   });
+  console.log('Menu item added, result:', result);
+  return result;
 }
 
 export async function getMenuItemsWithProfiles(date) {
@@ -81,7 +84,9 @@ export async function getMenuItemsWithProfiles(date) {
   const personStore = tx.objectStore(PERSON_STORE);
   const recipeStore = tx.objectStore(RECIPE_STORE);
 
+  console.log('Fetching menu items for date:', date);
   const menuItems = await menuItemStore.index('dateIndex').getAll(IDBKeyRange.only(date));
+  console.log('Retrieved menu items:', menuItems);
 
   const menuItemsWithDetails = await Promise.all(menuItems.map(async (item) => {
     const profiles = await Promise.all(item.profileIds.map(id => personStore.get(id)));
@@ -93,6 +98,7 @@ export async function getMenuItemsWithProfiles(date) {
     };
   }));
 
+  console.log('Menu items with details:', menuItemsWithDetails);
   return menuItemsWithDetails;
 }
 

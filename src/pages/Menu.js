@@ -105,10 +105,26 @@ const Menu = () => {
       recipeId: recipe.id,
       profiles: selectedProfiles || []
     };
-    console.log('Adding menu item:', menuItem);  // Add this line for debugging
-    await addMenuItem(menuItem);
-    await loadMenuItems();
+    console.log('Adding menu item:', menuItem);
+    try {
+      const result = await addMenuItem(menuItem);
+      console.log('Menu item added successfully:', result);
+      await loadMenuItems();
+      console.log('Menu items reloaded');
+    } catch (error) {
+      console.error('Error adding menu item:', error);
+    }
     setShowSearchModal(false);
+  };
+
+  const loadMenuItems = async () => {
+    try {
+      const menuItemsWithProfiles = await getMenuItemsWithProfiles(startOfWeek.toISOString().split('T')[0]);
+      console.log('Loaded menu items:', menuItemsWithProfiles);
+      setWeeklyMenu(menuItemsWithProfiles);
+    } catch (error) {
+      console.error('Error loading menu items:', error);
+    }
   };
 
   const handlePreviousWeek = () => {
