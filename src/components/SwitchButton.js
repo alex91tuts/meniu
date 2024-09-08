@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
 
 const SwitchButton = ({ activeTab, setActiveTab, options }) => {
+  const { theme } = useContext(ThemeContext);
+  const isDarkMode = theme.mode === 'dark';
+
   return (
     <div className="flex justify-center mb-4">
-      <div className="inline-flex rounded-full bg-[#212121] p-1 w-11/12">
+      <div className={`inline-flex rounded-full p-1 w-11/12 ${isDarkMode ? 'bg-[#212121]' : 'bg-gray-200'}`}>
         {options.map((option) => (
           <button
             key={option.value}
             className={`w-1/2 rounded-full py-2 text-xs font-medium transition-all duration-300 ${
               activeTab === option.value
-                ? 'bg-[#272727] text-[#fec10d]'
-                : 'text-[#525252] hover:text-white'
+                ? isDarkMode
+                  ? 'bg-[#272727] text-[#fec10d]'
+                  : 'bg-white text-blue-600'
+                : isDarkMode
+                  ? 'text-[#525252] hover:text-white'
+                  : 'text-gray-600 hover:text-gray-800'
             }`}
             onClick={() => setActiveTab(option.value)}
           >
