@@ -45,8 +45,13 @@ const Menu = () => {
   }, [weekOffset]);
 
   const loadRecipes = async () => {
-    const recipes = await getAllRecipes();
-    setRecipeList(recipes);
+    try {
+      const recipes = await getAllRecipes();
+      setRecipeList(recipes);
+      console.log('Loaded recipes:', recipes);
+    } catch (error) {
+      console.error('Error loading recipes:', error);
+    }
   };
 
   const loadMenuItems = async () => {
