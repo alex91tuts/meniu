@@ -29,11 +29,15 @@ const Settings = () => {
       reader.onloadend = async () => {
         const base64Picture = reader.result;
         const compressedPicture = await compressImage(base64Picture);
-        await addPerson({ ...newProfile, picture: compressedPicture });
+        await addPerson({ name: newProfile.name, picture: compressedPicture });
         setNewProfile({ name: '', picture: null });
         await loadProfiles();
       };
       reader.readAsDataURL(newProfile.picture);
+    } else if (newProfile.name) {
+      await addPerson({ name: newProfile.name, picture: '' });
+      setNewProfile({ name: '', picture: null });
+      await loadProfiles();
     }
   };
 

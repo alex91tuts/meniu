@@ -24,7 +24,9 @@ export async function addRecipe(recipe) {
 
 export async function getAllRecipes() {
   const db = await dbPromise;
-  return db.getAll(RECIPE_STORE);
+  const recipes = await db.getAll(RECIPE_STORE);
+  console.log('Retrieved recipes:', recipes);
+  return recipes;
 }
 
 export async function updateRecipe(recipe) {
