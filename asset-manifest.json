@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/meniu/static/css/main.45ecfb6b.css",
+    "main.js": "/meniu/static/js/main.f4d732fd.js",
+    "static/js/453.5625cb88.chunk.js": "/meniu/static/js/453.5625cb88.chunk.js",
+    "service-worker.js": "/meniu/service-worker.js",
+    "index.html": "/meniu/index.html",
+    "main.45ecfb6b.css.map": "/meniu/static/css/main.45ecfb6b.css.map",
+    "main.f4d732fd.js.map": "/meniu/static/js/main.f4d732fd.js.map",
+    "453.5625cb88.chunk.js.map": "/meniu/static/js/453.5625cb88.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.45ecfb6b.css",
+    "static/js/main.f4d732fd.js"
+  ]
+}
