@@ -77,15 +77,15 @@ export async function addMenuItem(menuItem) {
   return result;
 }
 
-export async function getMenuItemsWithProfiles(date) {
+export async function getMenuItemsWithProfiles(startDate, endDate) {
   const db = await dbPromise;
   const tx = db.transaction([MENU_ITEM_STORE, PERSON_STORE, RECIPE_STORE], 'readonly');
   const menuItemStore = tx.objectStore(MENU_ITEM_STORE);
   const personStore = tx.objectStore(PERSON_STORE);
   const recipeStore = tx.objectStore(RECIPE_STORE);
 
-  console.log('Fetching menu items for date:', date);
-  const menuItems = await menuItemStore.index('dateIndex').getAll(IDBKeyRange.only(date));
+  console.log('Fetching menu items for date range:', startDate, 'to', endDate);
+  const menuItems = await menuItemStore.index('dateIndex').getAll(IDBKeyRange.bound(startDate, endDate));
   console.log('Retrieved menu items:', menuItems);
 
   const menuItemsWithDetails = await Promise.all(menuItems.map(async (item) => {
