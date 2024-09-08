@@ -22,7 +22,7 @@ const RecipeCard = ({ title, image, mealType, onClick, onAdd, onDelete, showAddB
     <div 
       className="flex rounded-lg shadow-md overflow-hidden h-20 cursor-pointer relative" 
       onClick={onClick}
-      style={{ backgroundColor: theme.secondary }}
+      style={{ backgroundColor: "#272727" }}
     >
       <img src={image} alt={title} className="w-1/4 object-cover" />
       <div className="p-2 flex flex-col justify-between w-3/4">
