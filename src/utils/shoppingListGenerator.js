@@ -8,7 +8,9 @@ export function generateShoppingList(menuItems) {
       const currentQuantity = ingredientMap.get(key) || { 
         ingredient: ingredient.ingredient, 
         quantity: 0, 
-        quantityType: ingredient.quantityType 
+        quantityType: ingredient.quantityType,
+        checked: false,
+        inPantry: false
       };
       currentQuantity.quantity += parseFloat(ingredient.quantity) * numberOfPeople;
       ingredientMap.set(key, currentQuantity);
