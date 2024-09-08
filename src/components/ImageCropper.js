@@ -4,6 +4,7 @@ import Cropper from 'react-easy-crop';
 const ImageCropper = ({ image, onCropComplete, onCancel }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
   const onCropChange = (crop) => {
     setCrop(crop);
@@ -12,6 +13,10 @@ const ImageCropper = ({ image, onCropComplete, onCancel }) => {
   const onZoomChange = (zoom) => {
     setZoom(zoom);
   };
+
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
 
   const createImage = (url) =>
     new Promise((resolve, reject) => {
@@ -52,14 +57,14 @@ const ImageCropper = ({ image, onCropComplete, onCancel }) => {
     return canvas.toDataURL('image/jpeg');
   };
 
-  const handleCropComplete = useCallback(async (_, croppedAreaPixels) => {
+  const handleCrop = async () => {
     try {
       const croppedImage = await getCroppedImg(image, croppedAreaPixels);
       onCropComplete(croppedImage);
     } catch (e) {
       console.error(e);
     }
-  }, [image, onCropComplete]);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -72,7 +77,20 @@ const ImageCropper = ({ image, onCropComplete, onCancel }) => {
             aspect={1}
             onCropChange={onCropChange}
             onZoomChange={onZoomChange}
-            onCropComplete={handleCropComplete}
+            onCropComplete={onCropComplete}
+          />
+        </div>
+        <div className="flex justify-between items-center mb-4">
+          <label className="text-sm dark:text-white">Zoom</label>
+          <input
+            type="range"
+            value={zoom}
+            min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="Zoom"
+            onChange={(e) => setZoom(parseFloat(e.target.value))}
+            className="w-3/4"
           />
         </div>
         <div className="flex justify-between">
@@ -83,7 +101,7 @@ const ImageCropper = ({ image, onCropComplete, onCancel }) => {
             Cancel
           </button>
           <button
-            onClick={() => handleCropComplete(null, { width: 250, height: 250, x: crop.x, y: crop.y })}
+            onClick={handleCrop}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Crop
