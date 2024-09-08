@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-const RecipeCard = ({ title, image, participants, onClick }) => {
+const RecipeCard = ({ title, image, participants, onClick, onAddToMenu }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -24,6 +24,15 @@ const RecipeCard = ({ title, image, participants, onClick }) => {
               />
             ))}
           </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToMenu();
+            }}
+            className="text-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+          >
+            Add to Menu
+          </button>
         </div>
       </div>
     </div>
