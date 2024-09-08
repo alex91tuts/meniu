@@ -1,38 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import users from '../data/users';
+import { addPerson, getAllPersons, updatePerson, deletePerson } from '../utils/db';
 
 const Settings = () => {
-  const [profiles, setProfiles] = useState(users);
+  const [profiles, setProfiles] = useState([]);
   const [newProfile, setNewProfile] = useState({ name: '', picture: '' });
 
   useEffect(() => {
-    // Load profiles from localStorage on component mount
-    const savedProfiles = localStorage.getItem('profiles');
-    if (savedProfiles) {
-      setProfiles(JSON.parse(savedProfiles));
-    }
+    loadProfiles();
   }, []);
 
-  useEffect(() => {
-    // Save profiles to localStorage whenever it changes
-    localStorage.setItem('profiles', JSON.stringify(profiles));
-  }, [profiles]);
+  const loadProfiles = async () => {
+    const loadedProfiles = await getAllPersons();
+    setProfiles(loadedProfiles);
+  };
 
   const handleInputChange = (e) => {
     setNewProfile({ ...newProfile, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (newProfile.name && newProfile.picture) {
-      setProfiles([...profiles, newProfile]);
+      await addPerson(newProfile);
       setNewProfile({ name: '', picture: '' });
+      await loadProfiles();
     }
   };
 
-  const handleDeleteProfile = (index) => {
-    const updatedProfiles = profiles.filter((_, i) => i !== index);
-    setProfiles(updatedProfiles);
+  const handleDeleteProfile = async (id) => {
+    await deletePerson(id);
+    await loadProfiles();
   };
 
   return (
@@ -79,14 +76,14 @@ const Settings = () => {
             </button>
           </form>
           <div className="grid grid-cols-2 gap-2">
-            {profiles.map((profile, index) => (
-              <div key={index} className="flex items-center justify-between p-2 border rounded dark:border-gray-600">
+            {profiles.map((profile) => (
+              <div key={profile.id} className="flex items-center justify-between p-2 border rounded dark:border-gray-600">
                 <div className="flex items-center">
                   <img src={profile.picture} alt={profile.name} className="w-10 h-10 rounded-full mr-2" />
                   <span className="dark:text-white">{profile.name}</span>
                 </div>
                 <button
-                  onClick={() => handleDeleteProfile(index)}
+                  onClick={() => handleDeleteProfile(profile.id)}
                   className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-600"
                 >
                   Delete
