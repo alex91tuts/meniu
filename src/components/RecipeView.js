@@ -23,7 +23,7 @@ const RecipeView = ({ recipe, onClose }) => {
           <FaTimes size={24} />
         </button>
       </div>
-      <div className="bg-white dark:bg-gray-800 flex-grow overflow-y-auto rounded-t-3xl -mt-10 relative z-10">
+      <div className="bg-white dark:bg-[#212121] flex-grow overflow-y-auto rounded-t-3xl -mt-10 relative z-10">
         <div className="w-8 h-1 bg-gray-300 dark:bg-gray-600 mx-auto mt-6 mb-2"></div>
         <h2 className="text-2xl font-bold dark:text-white text-center mb-4">{recipe.title}</h2>
         <div className="px-6">
