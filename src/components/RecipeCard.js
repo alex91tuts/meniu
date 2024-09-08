@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-const RecipeCard = ({ title, image, participants, onClick }) => {
+const RecipeCard = ({ title, image, participants, onClick, onAdd, showAddButton }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div 
-      className="flex rounded-lg shadow-md overflow-hidden h-20 cursor-pointer" 
+      className="flex rounded-lg shadow-md overflow-hidden h-20 cursor-pointer relative" 
       onClick={onClick}
       style={{ backgroundColor: theme.secondary }}
     >
@@ -24,6 +24,17 @@ const RecipeCard = ({ title, image, participants, onClick }) => {
           ))}
         </div>
       </div>
+      {showAddButton && (
+        <button
+          className="absolute top-0 right-0 bg-green-500 text-white p-1 rounded-bl"
+          onClick={(e) => {
+            e.stopPropagation();
+            onAdd();
+          }}
+        >
+          Add
+        </button>
+      )}
     </div>
   );
 };
