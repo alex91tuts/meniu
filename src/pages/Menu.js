@@ -47,8 +47,13 @@ const Menu = () => {
   };
 
   const loadMenuItems = async () => {
-    const menuItemsWithProfiles = await getMenuItemsWithProfiles(startOfWeek.toISOString().split('T')[0]);
-    setWeeklyMenu(menuItemsWithProfiles);
+    try {
+      const menuItemsWithProfiles = await getMenuItemsWithProfiles(startOfWeek.toISOString().split('T')[0]);
+      console.log('Loaded menu items:', menuItemsWithProfiles);
+      setWeeklyMenu(menuItemsWithProfiles);
+    } catch (error) {
+      console.error('Error loading menu items:', error);
+    }
   };
 
   const mealTypes = {
@@ -115,16 +120,6 @@ const Menu = () => {
       console.error('Error adding menu item:', error);
     }
     setShowSearchModal(false);
-  };
-
-  const loadMenuItems = async () => {
-    try {
-      const menuItemsWithProfiles = await getMenuItemsWithProfiles(startOfWeek.toISOString().split('T')[0]);
-      console.log('Loaded menu items:', menuItemsWithProfiles);
-      setWeeklyMenu(menuItemsWithProfiles);
-    } catch (error) {
-      console.error('Error loading menu items:', error);
-    }
   };
 
   const handlePreviousWeek = () => {
