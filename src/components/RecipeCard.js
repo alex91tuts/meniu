@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-const RecipeCard = ({ title, image, mealType, onClick, onAdd, showAddButton, profiles }) => {
+const RecipeCard = ({ title, image, mealType, onClick, onAdd, showAddButton, profiles = [] }) => {
   const { theme } = useContext(ThemeContext);
 
   const getMealTypeIcon = (mealType) => {
@@ -31,18 +31,16 @@ const RecipeCard = ({ title, image, mealType, onClick, onAdd, showAddButton, pro
             <span className="text-lg mr-2">{getMealTypeIcon(mealType)}</span>
             <span className="text-sm text-gray-500">{mealType}</span>
           </div>
-          {profiles && (
+          {profiles.length > 0 && (
             <div className="flex -space-x-2 overflow-hidden">
-              {profiles && profiles.map((profile, index) => {
-                return profile && profile.picture ? (
-                  <img
-                    key={index}
-                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                    src={profile.picture}
-                    alt={profile.name || 'Profile'}
-                  />
-                ) : null;
-              })}
+              {profiles.map((profile, index) => (
+                <img
+                  key={index}
+                  className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                  src={profile.picture}
+                  alt={profile.name || 'Profile'}
+                />
+              ))}
             </div>
           )}
         </div>

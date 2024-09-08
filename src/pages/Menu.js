@@ -181,7 +181,7 @@ const Menu = () => {
                   title={recipe.title}
                   image={recipe.image}
                   mealType={recipe.mealType}
-                  profiles={recipe.profiles}
+                  profiles={recipe.profiles || []}
                   onClick={() => handleEditRecipe(recipe)}
                 />
               ))}
