@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
@@ -20,10 +20,13 @@ const Menu = () => {
   const [weeklyMenu, setWeeklyMenu] = useState([]);
   const [weekOffset, setWeekOffset] = useState(0);
 
-  const weekDays = ['Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sam', 'Dum'];
-  const currentDate = new Date();
-  const startOfWeek = new Date(currentDate);
-  startOfWeek.setDate(currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 : 1) + weekOffset * 7);
+  const weekDays = useMemo(() => ['Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sam', 'Dum'], []);
+  const currentDate = useMemo(() => new Date(), []);
+  const startOfWeek = useMemo(() => {
+    const start = new Date(currentDate);
+    start.setDate(currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 : 1) + weekOffset * 7);
+    return start;
+  }, [currentDate, weekOffset]);
 
   const loadRecipes = useCallback(async () => {
     try {
@@ -61,8 +64,11 @@ const Menu = () => {
 
   useEffect(() => {
     loadRecipes();
+  }, [loadRecipes]);
+
+  useEffect(() => {
     loadMenuItems();
-  }, [loadRecipes, loadMenuItems]);
+  }, [loadMenuItems]);
 
   useEffect(() => {
     const style = document.createElement('style');
