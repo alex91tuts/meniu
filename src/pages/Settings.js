@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { addPerson, getAllPersons, updatePerson, deletePerson } from '../utils/db';
+import { addPerson, getAllPersons, updatePerson, deletePerson, compressImage } from '../utils/db';
 
 const Settings = () => {
   const [profiles, setProfiles] = useState([]);
