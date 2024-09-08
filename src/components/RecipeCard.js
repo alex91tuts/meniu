@@ -26,13 +26,13 @@ const RecipeCard = ({ title, image, participants, onClick, onAdd, showAddButton 
       </div>
       {showAddButton && (
         <button
-          className="absolute top-0 right-0 bg-green-500 text-white p-1 rounded-bl"
+          className="absolute top-0 right-0 bg-green-500 text-white w-6 h-6 flex items-center justify-center rounded-bl"
           onClick={(e) => {
             e.stopPropagation();
             onAdd();
           }}
         >
-          Add
+          +
         </button>
       )}
     </div>
