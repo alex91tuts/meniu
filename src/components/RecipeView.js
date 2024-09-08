@@ -50,14 +50,15 @@ const RecipeView = ({ recipe, onClose }) => {
             options={switchOptions}
           />
           {activeTab === 'ingredients' && (
-            <div className="mb-4">
-              <ul className="list-disc list-inside">
-                {recipe.ingredients.map((ingredient, index) => (
-                  <li key={index} className="dark:text-gray-300 text-[0.9rem]">
-                    {ingredient.quantity} {ingredient.quantityType} {ingredient.ingredient}
-                  </li>
-                ))}
-              </ul>
+            <div className="mb-4 grid grid-cols-2 gap-2">
+              {recipe.ingredients.map((ingredient, index) => (
+                <div key={index} className="bg-gray-100 dark:bg-gray-700 p-2 rounded-md shadow-sm">
+                  <p className="text-sm font-medium dark:text-gray-200">{ingredient.ingredient}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                    {ingredient.quantity} {ingredient.quantityType}
+                  </p>
+                </div>
+              ))}
             </div>
           )}
           {activeTab === 'instructions' && (
