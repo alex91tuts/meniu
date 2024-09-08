@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
@@ -25,10 +25,44 @@ const Menu = () => {
   const startOfWeek = new Date(currentDate);
   startOfWeek.setDate(currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 : 1) + weekOffset * 7);
 
+  const loadRecipes = useCallback(async () => {
+    try {
+      const recipes = await getAllRecipes();
+      setRecipeList(recipes);
+      console.log('Loaded recipes:', recipes);
+    } catch (error) {
+      console.error('Error loading recipes:', error);
+    }
+  }, []);
+
+  const loadMenuItems = useCallback(async () => {
+    try {
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      const menuItemsWithProfiles = await getMenuItemsWithProfiles(
+        startOfWeek.toISOString().split('T')[0],
+        endOfWeek.toISOString().split('T')[0]
+      );
+      console.log('Loaded menu items:', menuItemsWithProfiles);
+      // Group menu items by date and meal type
+      const groupedMenuItems = menuItemsWithProfiles.reduce((acc, item) => {
+        const key = `${item.date}-${item.mealType}`;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(item);
+        return acc;
+      }, {});
+      setWeeklyMenu(groupedMenuItems);
+    } catch (error) {
+      console.error('Error loading menu items:', error);
+    }
+  }, [startOfWeek]);
+
   useEffect(() => {
     loadRecipes();
     loadMenuItems();
-  }, [startOfWeek]);
+  }, [loadRecipes, loadMenuItems]);
 
   useEffect(() => {
     const style = document.createElement('style');

@@ -87,14 +87,19 @@ export async function getMenuItemsWithProfiles(startDate, endDate) {
   console.log('Fetching menu items for date range:', startDate, 'to', endDate);
   let menuItems;
   if (startDate && endDate) {
-    menuItems = await menuItemStore.index('dateIndex').getAll(IDBKeyRange.bound(startDate, endDate));
+    try {
+      menuItems = await menuItemStore.index('dateIndex').getAll(IDBKeyRange.bound(startDate, endDate));
+    } catch (error) {
+      console.error('Error fetching menu items:', error);
+      menuItems = [];
+    }
   } else {
     menuItems = await menuItemStore.getAll();
   }
   console.log('Retrieved menu items:', menuItems);
 
   const menuItemsWithDetails = await Promise.all(menuItems.map(async (item) => {
-    const profiles = await Promise.all(item.profileIds.map(id => personStore.get(id)));
+    const profiles = await Promise.all((item.profileIds || []).map(id => personStore.get(id)));
     const recipe = await recipeStore.get(item.recipeId);
     return {
       ...item,
