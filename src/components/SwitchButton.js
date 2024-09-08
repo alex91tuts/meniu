@@ -15,10 +15,10 @@ const SwitchButton = ({ activeTab, setActiveTab, options }) => {
               activeTab === option.value
                 ? isDarkMode
                   ? 'bg-[#272727] text-[#fec10d]'
-                  : 'bg-white text-blue-600'
+                  : 'bg-white text-gray-800'
                 : isDarkMode
                   ? 'text-[#525252] hover:text-white'
-                  : 'text-gray-600 hover:text-gray-800'
+                  : 'text-gray-600 hover:text-yellow-800'
             }`}
             onClick={() => setActiveTab(option.value)}
           >
