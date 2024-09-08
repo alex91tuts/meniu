@@ -28,18 +28,20 @@ const RecipeView = ({ recipe, onClose }) => {
         <h2 className="text-2xl font-bold dark:text-white text-center mb-4">{recipe.title}</h2>
         <div className="flex justify-center space-x-8 mb-4">
           <div className="flex flex-col items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#b68e16]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="text-sm font-medium dark:text-gray-300 mt-1">{recipe.cookingTime} min</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">timp</p>
+            <p className="text-xs font-medium dark:text-gray-300 mt-1">{recipe.cookingTime} min</p>
+            <div className="w-8 h-px bg-gray-200 my-1"></div>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400">timp</p>
           </div>
           <div className="flex flex-col items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#b68e16]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
-            <p className="text-sm font-medium dark:text-gray-300 mt-1">{recipe.difficulty}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">dificultate</p>
+            <p className="text-xs font-medium dark:text-gray-300 mt-1">{recipe.difficulty}</p>
+            <div className="w-8 h-px bg-gray-200 my-1"></div>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400">dificultate</p>
           </div>
         </div>
         <div className="px-6">
