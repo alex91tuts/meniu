@@ -155,15 +155,15 @@ const Menu = () => {
             <div className="flex justify-center space-x-4">
               <button
                 onClick={handlePreviousWeek}
-                className="p-2 rounded bg-gray-200 hover:bg-gray-300"
+                className="p-2"
               >
-                <FaChevronLeft />
+                <FaChevronLeft color="#ffc20d" />
               </button>
               <button
                 onClick={handleNextWeek}
-                className="p-2 rounded bg-gray-200 hover:bg-gray-300"
+                className="p-2"
               >
-                <FaChevronRight />
+                <FaChevronRight color="#ffc20d" />
               </button>
             </div>
           </div>
