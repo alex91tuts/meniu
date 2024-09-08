@@ -1,15 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
-import recipes from '../data/recipes';
+import { getAllRecipes, addRecipe, updateRecipe, deleteRecipe } from '../utils/db';
 import users from '../data/users';
 import { FaCoffee, FaUtensils, FaMoon } from 'react-icons/fa';
 
 const Menu = () => {
   const { theme } = useContext(ThemeContext);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [recipeList, setRecipeList] = useState([]);
+  const [selectedMealType, setSelectedMealType] = useState('Mic dejun');
+  const [selectedDay, setSelectedDay] = useState(0);
+  const [weeklyMenu, setWeeklyMenu] = useState({});
 
-  React.useEffect(() => {
+  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const currentDate = new Date();
+  const currentDay = currentDate.getDay();
+  const startOfWeek = new Date(currentDate);
+  startOfWeek.setDate(currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
+
+  useEffect(() => {
+    loadRecipes();
     const style = document.createElement('style');
     style.textContent = `
       .menu-button {
@@ -25,16 +38,11 @@ const Menu = () => {
       document.head.removeChild(style);
     };
   }, []);
-  const [showForm, setShowForm] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const [recipeList, setRecipeList] = useState(recipes);
-  const [selectedMealType, setSelectedMealType] = useState('Mic dejun');
 
-  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const currentDate = new Date();
-  const currentDay = currentDate.getDay();
-  const startOfWeek = new Date(currentDate);
-  startOfWeek.setDate(currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
+  const loadRecipes = async () => {
+    const recipes = await getAllRecipes();
+    setRecipeList(recipes);
+  };
 
   const mealTypes = {
     'Mic dejun': recipeList.filter(recipe => recipe.mealType === 'Mic dejun'),
@@ -49,16 +57,13 @@ const Menu = () => {
     setShowForm(true);
   };
 
-  const handleSaveRecipe = (newRecipe) => {
+  const handleSaveRecipe = async (newRecipe) => {
     if (selectedRecipe) {
-      const updatedRecipes = recipeList.map(recipe => 
-        recipe.id === selectedRecipe.id ? { ...newRecipe, id: selectedRecipe.id } : recipe
-      );
-      setRecipeList(updatedRecipes);
+      await updateRecipe(newRecipe);
     } else {
-      const updatedRecipes = [...recipeList, { ...newRecipe, id: recipeList.length + 1 }];
-      setRecipeList(updatedRecipes);
+      await addRecipe(newRecipe);
     }
+    await loadRecipes();
     setShowForm(false);
     setSelectedRecipe(null);
   };
@@ -68,9 +73,9 @@ const Menu = () => {
     setSelectedRecipe(null);
   };
 
-  const handleDeleteRecipe = (id) => {
-    const updatedRecipes = recipeList.filter(recipe => recipe.id !== id);
-    setRecipeList(updatedRecipes);
+  const handleDeleteRecipe = async (id) => {
+    await deleteRecipe(id);
+    await loadRecipes();
     setShowForm(false);
     setSelectedRecipe(null);
   };
@@ -86,6 +91,16 @@ const Menu = () => {
       default:
         return null;
     }
+  };
+
+  const handleAddToWeeklyMenu = (recipe) => {
+    setWeeklyMenu(prevMenu => ({
+      ...prevMenu,
+      [selectedDay]: {
+        ...prevMenu[selectedDay],
+        [selectedMealType]: [...(prevMenu[selectedDay]?.[selectedMealType] || []), recipe]
+      }
+    }));
   };
 
   return (
@@ -106,11 +121,17 @@ const Menu = () => {
               const isCurrentDay = date.toDateString() === currentDate.toDateString();
 
               return (
-                <div key={day} className="flex flex-col items-center mx-2">
-                  <span className="text-sm font-medium dark:text-gray-300">{day}</span>
-                  <span className="text-lg font-semibold dark:text-white">{date.getDate().toString().padStart(2, '0')}</span>
+                <button
+                  key={day}
+                  onClick={() => setSelectedDay(index)}
+                  className={`flex flex-col items-center mx-2 p-2 rounded ${
+                    selectedDay === index ? 'bg-blue-500 text-white' : ''
+                  }`}
+                >
+                  <span className="text-sm font-medium">{day}</span>
+                  <span className="text-lg font-semibold">{date.getDate().toString().padStart(2, '0')}</span>
                   {isCurrentDay && <div className="w-1 h-1 bg-red-500 rounded-full mt-1"></div>}
-                </div>
+                </button>
               );
             })}
           </div>
@@ -136,6 +157,7 @@ const Menu = () => {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold dark:text-white">{selectedMealType}</h2>
               <button 
+                onClick={() => setShowForm(true)}
                 className="text-2xl font-bold px-2 py-1 focus:outline-none menu-button" 
                 style={{ 
                   backgroundColor: theme.secondary,
@@ -153,9 +175,28 @@ const Menu = () => {
                   image={recipe.image}
                   participants={participants}
                   onClick={() => handleEditRecipe(recipe)}
+                  onAddToMenu={() => handleAddToWeeklyMenu(recipe)}
                 />
               ))}
             </div>
+          </div>
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold dark:text-white mb-4">Weekly Menu</h2>
+            {weekDays.map((day, index) => (
+              <div key={day} className="mb-4">
+                <h3 className="text-xl font-semibold dark:text-white">{day}</h3>
+                {Object.keys(mealTypes).map((mealType) => (
+                  <div key={mealType} className="ml-4">
+                    <h4 className="text-lg font-medium dark:text-white">{mealType}</h4>
+                    <ul className="list-disc list-inside">
+                      {weeklyMenu[index]?.[mealType]?.map((recipe, recipeIndex) => (
+                        <li key={recipeIndex}>{recipe.title}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </>
       )}
