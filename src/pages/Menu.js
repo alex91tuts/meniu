@@ -28,6 +28,9 @@ const Menu = () => {
   useEffect(() => {
     loadRecipes();
     loadMenuItems();
+  }, [startOfWeek]);
+
+  useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
       .menu-button {
@@ -277,6 +280,7 @@ const Menu = () => {
                     profiles={menuItem.profiles}
                     onClick={() => handleViewRecipe(menuItem.recipe)}
                     onDelete={() => handleDeleteMenuItem(menuItem.id)}
+                    showAddButton={false}
                   />
                 ));
               })()}
