@@ -95,12 +95,15 @@ const Menu = () => {
     }
   };
 
-  const handleAddToWeeklyMenu = (recipe) => {
+  const handleAddToWeeklyMenu = (recipe, selectedProfiles) => {
     setWeeklyMenu(prevMenu => ({
       ...prevMenu,
       [selectedDay]: {
         ...prevMenu[selectedDay],
-        [selectedMealType]: [...(prevMenu[selectedDay]?.[selectedMealType] || []), recipe]
+        [selectedMealType]: [
+          ...(prevMenu[selectedDay]?.[selectedMealType] || []),
+          { ...recipe, profiles: selectedProfiles }
+        ]
       }
     }));
     setShowSearchModal(false);
