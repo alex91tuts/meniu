@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getMenuItemsWithProfiles, getShoppingList, addShoppingList, updateShoppingList } from '../utils/db';
 import { generateShoppingList } from '../utils/shoppingListGenerator';
-import { FaChevronLeft, FaChevronRight, FaCheck, FaPlus } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaCheck, FaPlus, FaUndo } from 'react-icons/fa';
 import AddItemModal from '../components/AddItemModal';
 
 const Shopping = () => {
@@ -89,6 +89,42 @@ const Shopping = () => {
     });
   };
 
+  const moveItemFromPantry = async (itemIndex) => {
+    const updatedPantryItems = [...pantryItems];
+    const [movedItem] = updatedPantryItems.splice(itemIndex, 1);
+    const updatedList = shoppingList.map(category => {
+      if (category.category === movedItem.category) {
+        return {
+          ...category,
+          items: [...category.items, { ...movedItem, checked: false }]
+        };
+      }
+      return category;
+    });
+    setPantryItems(updatedPantryItems);
+    setShoppingList(updatedList);
+    await updateShoppingList({
+      weekStart: startDate.toISOString().split('T')[0],
+      items: updatedList,
+      pantryItems: updatedPantryItems
+    });
+  };
+
+  const resetShoppingList = async () => {
+    const weekStart = startDate.toISOString().split('T')[0];
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 6);
+    const menuItems = await getMenuItemsWithProfiles(weekStart, endDate.toISOString().split('T')[0]);
+    const generatedList = generateShoppingList(menuItems);
+    setShoppingList(generatedList);
+    setPantryItems([]);
+    await updateShoppingList({
+      weekStart: weekStart,
+      items: generatedList,
+      pantryItems: []
+    });
+  };
+
   const addNewItem = async (newItem) => {
     const updatedList = [...shoppingList];
     const categoryIndex = updatedList.findIndex(c => c.category === newItem.category);
@@ -113,12 +149,20 @@ const Shopping = () => {
     <div className="container mx-auto px-2 sm:px-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl sm:text-3xl font-bold dark:text-white">Lista de cumpărături</h1>
-        <button
-          onClick={() => setShowAddItemModal(true)}
-          className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center"
-        >
-          <FaPlus className="mr-1" /> Adaugă
-        </button>
+        <div className="flex space-x-2">
+          <button
+            onClick={resetShoppingList}
+            className="p-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 flex items-center"
+          >
+            <FaUndo className="mr-1" /> Reset
+          </button>
+          <button
+            onClick={() => setShowAddItemModal(true)}
+            className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center"
+          >
+            <FaPlus className="mr-1" /> Adaugă
+          </button>
+        </div>
       </div>
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center space-x-2 sm:space-x-4">
@@ -171,10 +215,16 @@ const Shopping = () => {
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
             <ul className="space-y-2">
               {pantryItems.map((item, index) => (
-                <li key={index} className="flex items-center space-x-2 text-xs sm:text-sm">
+                <li key={index} className="flex items-center justify-between space-x-2 text-xs sm:text-sm">
                   <span className="dark:text-gray-300">
                     {`${item.ingredient}: ${item.quantity} ${item.quantityType} (${item.category})`}
                   </span>
+                  <button
+                    onClick={() => moveItemFromPantry(index)}
+                    className="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 text-xs"
+                  >
+                    Înapoi în listă
+                  </button>
                 </li>
               ))}
             </ul>
