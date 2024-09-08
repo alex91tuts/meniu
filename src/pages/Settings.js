@@ -3,7 +3,7 @@ import { addPerson, getAllPersons, updatePerson, deletePerson } from '../utils/d
 
 const Settings = () => {
   const [profiles, setProfiles] = useState([]);
-  const [newProfile, setNewProfile] = useState({ name: '', picture: '' });
+  const [newProfile, setNewProfile] = useState({ name: '', picture: null });
 
   useEffect(() => {
     loadProfiles();
@@ -15,15 +15,25 @@ const Settings = () => {
   };
 
   const handleInputChange = (e) => {
-    setNewProfile({ ...newProfile, [e.target.name]: e.target.value });
+    if (e.target.name === 'picture') {
+      setNewProfile({ ...newProfile, picture: e.target.files[0] });
+    } else {
+      setNewProfile({ ...newProfile, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newProfile.name && newProfile.picture) {
-      await addPerson(newProfile);
-      setNewProfile({ name: '', picture: '' });
-      await loadProfiles();
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64Picture = reader.result;
+        const compressedPicture = await compressImage(base64Picture);
+        await addPerson({ ...newProfile, picture: compressedPicture });
+        setNewProfile({ name: '', picture: null });
+        await loadProfiles();
+      };
+      reader.readAsDataURL(newProfile.picture);
     }
   };
 
@@ -64,11 +74,10 @@ const Settings = () => {
               className="w-full p-2 mb-2 border rounded dark:bg-gray-700 dark:text-white"
             />
             <input
-              type="text"
+              type="file"
               name="picture"
-              value={newProfile.picture}
+              accept="image/*"
               onChange={handleInputChange}
-              placeholder="Picture URL"
               className="w-full p-2 mb-2 border rounded dark:bg-gray-700 dark:text-white"
             />
             <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600">
