@@ -167,7 +167,10 @@ export function compressImage(base64String, maxWidth = 300, maxHeight = 300) {
 // Shopping List functions
 export async function addShoppingList(shoppingList) {
   const db = await dbPromise;
-  return db.add(SHOPPING_LIST_STORE, shoppingList);
+  return db.add(SHOPPING_LIST_STORE, {
+    ...shoppingList,
+    pantryItems: shoppingList.pantryItems || []
+  });
 }
 
 export async function getShoppingList(weekStart) {
@@ -177,10 +180,13 @@ export async function getShoppingList(weekStart) {
 
 export async function updateShoppingList(shoppingList) {
   const db = await dbPromise;
-  return db.put(SHOPPING_LIST_STORE, shoppingList);
+  return db.put(SHOPPING_LIST_STORE, {
+    ...shoppingList,
+    pantryItems: shoppingList.pantryItems || []
+  });
 }
 
-export async function deleteShoppingList(id) {
+export async function deleteShoppingList(weekStart) {
   const db = await dbPromise;
-  return db.delete(SHOPPING_LIST_STORE, id);
+  return db.delete(SHOPPING_LIST_STORE, weekStart);
 }

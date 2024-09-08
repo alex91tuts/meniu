@@ -29,13 +29,14 @@ const Shopping = () => {
         console.log('Menu items for the week:', menuItems);
         const generatedList = generateShoppingList(menuItems);
         console.log('Generated shopping list:', generatedList);
-        existingList = { weekStart, items: generatedList };
+        existingList = { weekStart, items: generatedList, pantryItems: [] };
         await addShoppingList(existingList);
         console.log('New shopping list added to database');
       }
       
       console.log('Setting shopping list:', existingList.items);
       setShoppingList(existingList.items);
+      setPantryItems(existingList.pantryItems || []);
     } catch (error) {
       console.error('Error loading shopping list:', error);
     }
@@ -78,9 +79,14 @@ const Shopping = () => {
       return category;
     });
     const itemToMove = shoppingList.find(c => c.id === categoryId).items[itemIndex];
-    setPantryItems(prev => [...prev, { ...itemToMove, category: shoppingList.find(c => c.id === categoryId).category }]);
+    const updatedPantryItems = [...pantryItems, { ...itemToMove, category: shoppingList.find(c => c.id === categoryId).category }];
+    setPantryItems(updatedPantryItems);
     setShoppingList(updatedList);
-    await updateShoppingList({ weekStart: startDate.toISOString().split('T')[0], items: updatedList });
+    await updateShoppingList({ 
+      weekStart: startDate.toISOString().split('T')[0], 
+      items: updatedList,
+      pantryItems: updatedPantryItems
+    });
   };
 
   const addNewItem = async (newItem) => {
