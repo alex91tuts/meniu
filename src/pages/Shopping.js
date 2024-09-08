@@ -17,17 +17,24 @@ const Shopping = () => {
   const loadShoppingList = async () => {
     try {
       const weekStart = startDate.toISOString().split('T')[0];
+      console.log('Fetching shopping list for week starting:', weekStart);
       let existingList = await getShoppingList(weekStart);
+      console.log('Existing list:', existingList);
       
       if (!existingList) {
+        console.log('No existing list found, generating new list');
         const endDate = new Date(startDate);
         endDate.setDate(endDate.getDate() + 6);
         const menuItems = await getMenuItemsWithProfiles(weekStart, endDate.toISOString().split('T')[0]);
+        console.log('Menu items for the week:', menuItems);
         const generatedList = generateShoppingList(menuItems);
+        console.log('Generated shopping list:', generatedList);
         existingList = { weekStart, items: generatedList };
         await addShoppingList(existingList);
+        console.log('New shopping list added to database');
       }
       
+      console.log('Setting shopping list:', existingList.items);
       setShoppingList(existingList.items);
     } catch (error) {
       console.error('Error loading shopping list:', error);
