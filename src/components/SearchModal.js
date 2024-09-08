@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 import RecipeCard from './RecipeCard';
 import ProfileSelectionPopup from './ProfileSelectionPopup';
+import { getAllPersons } from '../utils/db';
 
 const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
   const { theme } = useContext(ThemeContext);
@@ -9,8 +10,17 @@ const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
   const [selectedMealType, setSelectedMealType] = useState('All');
   const [showProfilePopup, setShowProfilePopup] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [profiles, setProfiles] = useState([]);
 
   const mealTypes = ['All', 'Mic dejun', 'Pranz', 'Cina'];
+
+  useEffect(() => {
+    const loadProfiles = async () => {
+      const loadedProfiles = await getAllPersons();
+      setProfiles(loadedProfiles);
+    };
+    loadProfiles();
+  }, []);
 
   const filteredRecipes = recipes.filter(recipe =>
     recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
