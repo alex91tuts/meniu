@@ -25,7 +25,7 @@ const RecipeView = ({ recipe, onClose }) => {
           <div className="flex justify-center mb-4">
             <div className="inline-flex rounded-full bg-[#212121] p-1 w-11/12">
               <button
-                className={`w-1/2 rounded-full py-2 text-sm font-medium transition-all duration-300 ${
+                className={`w-1/2 rounded-full py-2 text-xs font-medium transition-all duration-300 ${
                   activeTab === 'ingredients'
                     ? 'bg-[#272727] text-[#fec10d]'
                     : 'text-[#525252] hover:text-white'
@@ -35,7 +35,7 @@ const RecipeView = ({ recipe, onClose }) => {
                 Ingrediente
               </button>
               <button
-                className={`w-1/2 rounded-full py-2 text-sm font-medium transition-all duration-300 ${
+                className={`w-1/2 rounded-full py-2 text-xs font-medium transition-all duration-300 ${
                   activeTab === 'instructions'
                     ? 'bg-[#272727] text-[#fec10d]'
                     : 'text-[#525252] hover:text-white'
