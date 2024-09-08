@@ -114,7 +114,7 @@ const Menu = () => {
         />
       ) : (
         <>
-          <div className="flex justify-between mb-6 overflow-x-auto">
+          <div className="grid grid-cols-7 gap-2 mb-6">
             {weekDays.map((day, index) => {
               const date = new Date(startOfWeek);
               date.setDate(startOfWeek.getDate() + index);
@@ -124,9 +124,10 @@ const Menu = () => {
                 <button
                   key={day}
                   onClick={() => setSelectedDay(index)}
-                  className={`flex flex-col items-center mx-2 p-2 rounded ${
-                    selectedDay === index ? 'bg-blue-500 text-white' : ''
+                  className={`flex flex-col items-center p-2 rounded ${
+                    selectedDay === index ? 'border-2 border-yellow-400' : ''
                   }`}
+                  style={{ backgroundColor: theme.secondary }}
                 >
                   <span className="text-sm font-medium">{day}</span>
                   <span className="text-lg font-semibold">{date.getDate().toString().padStart(2, '0')}</span>
