@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getMenuItemsWithProfiles } from '../utils/db';
+import { getMenuItemsWithProfiles, getShoppingList, addShoppingList, updateShoppingList } from '../utils/db';
 import { generateShoppingList } from '../utils/shoppingListGenerator';
 import { FaChevronLeft, FaChevronRight, FaCheck, FaPlus } from 'react-icons/fa';
 import AddItemModal from '../components/AddItemModal';
@@ -16,11 +16,19 @@ const Shopping = () => {
 
   const loadShoppingList = async () => {
     try {
-      const endDate = new Date(startDate);
-      endDate.setDate(endDate.getDate() + 6);
-      const menuItems = await getMenuItemsWithProfiles(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
-      const generatedList = generateShoppingList(menuItems);
-      setShoppingList(generatedList);
+      const weekStart = startDate.toISOString().split('T')[0];
+      let existingList = await getShoppingList(weekStart);
+      
+      if (!existingList) {
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + 6);
+        const menuItems = await getMenuItemsWithProfiles(weekStart, endDate.toISOString().split('T')[0]);
+        const generatedList = generateShoppingList(menuItems);
+        existingList = { weekStart, items: generatedList };
+        await addShoppingList(existingList);
+      }
+      
+      setShoppingList(existingList.items);
     } catch (error) {
       console.error('Error loading shopping list:', error);
     }
@@ -38,61 +46,53 @@ const Shopping = () => {
     return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
   };
 
-  const toggleItemCheck = (categoryId, itemIndex) => {
-    setShoppingList(prevList => 
-      prevList.map(category => {
-        if (category.id === categoryId) {
-          const newItems = [...category.items];
-          newItems[itemIndex] = { ...newItems[itemIndex], checked: !newItems[itemIndex].checked };
-          // Move checked items to the end
-          newItems.sort((a, b) => a.checked === b.checked ? 0 : a.checked ? 1 : -1);
-          return { ...category, items: newItems };
-        }
-        return category;
-      })
-    );
-  };
-
-  const moveItemToPantry = (categoryId, itemIndex) => {
-    setShoppingList(prevList => {
-      const newList = prevList.map(category => {
-        if (category.id === categoryId) {
-          const newItems = [...category.items];
-          const [movedItem] = newItems.splice(itemIndex, 1);
-          return { ...category, items: newItems };
-        }
-        return category;
-      });
-      const itemToMove = shoppingList.find(c => c.id === categoryId).items[itemIndex];
-      setPantryItems(prev => [...prev, { ...itemToMove, category: shoppingList.find(c => c.id === categoryId).category }]);
-      return newList;
-    });
-  };
-
-  const addNewItem = (newItem) => {
-    setShoppingList(prevList => {
-      const categoryIndex = prevList.findIndex(c => c.category === newItem.category);
-      if (categoryIndex !== -1) {
-        const updatedCategory = {
-          ...prevList[categoryIndex],
-          items: [...prevList[categoryIndex].items, { ...newItem, checked: false }]
-        };
-        return [
-          ...prevList.slice(0, categoryIndex),
-          updatedCategory,
-          ...prevList.slice(categoryIndex + 1)
-        ];
-      } else {
-        return [
-          ...prevList,
-          {
-            id: prevList.length + 1,
-            category: newItem.category,
-            items: [{ ...newItem, checked: false }]
-          }
-        ];
+  const toggleItemCheck = async (categoryId, itemIndex) => {
+    const updatedList = shoppingList.map(category => {
+      if (category.id === categoryId) {
+        const newItems = [...category.items];
+        newItems[itemIndex] = { ...newItems[itemIndex], checked: !newItems[itemIndex].checked };
+        // Move checked items to the end
+        newItems.sort((a, b) => a.checked === b.checked ? 0 : a.checked ? 1 : -1);
+        return { ...category, items: newItems };
       }
+      return category;
     });
+    setShoppingList(updatedList);
+    await updateShoppingList({ weekStart: startDate.toISOString().split('T')[0], items: updatedList });
+  };
+
+  const moveItemToPantry = async (categoryId, itemIndex) => {
+    const updatedList = shoppingList.map(category => {
+      if (category.id === categoryId) {
+        const newItems = [...category.items];
+        const [movedItem] = newItems.splice(itemIndex, 1);
+        return { ...category, items: newItems };
+      }
+      return category;
+    });
+    const itemToMove = shoppingList.find(c => c.id === categoryId).items[itemIndex];
+    setPantryItems(prev => [...prev, { ...itemToMove, category: shoppingList.find(c => c.id === categoryId).category }]);
+    setShoppingList(updatedList);
+    await updateShoppingList({ weekStart: startDate.toISOString().split('T')[0], items: updatedList });
+  };
+
+  const addNewItem = async (newItem) => {
+    const updatedList = [...shoppingList];
+    const categoryIndex = updatedList.findIndex(c => c.category === newItem.category);
+    if (categoryIndex !== -1) {
+      updatedList[categoryIndex] = {
+        ...updatedList[categoryIndex],
+        items: [...updatedList[categoryIndex].items, { ...newItem, checked: false }]
+      };
+    } else {
+      updatedList.push({
+        id: updatedList.length + 1,
+        category: newItem.category,
+        items: [{ ...newItem, checked: false }]
+      });
+    }
+    setShoppingList(updatedList);
+    await updateShoppingList({ weekStart: startDate.toISOString().split('T')[0], items: updatedList });
     setShowAddItemModal(false);
   };
 

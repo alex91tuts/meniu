@@ -1,10 +1,11 @@
 import { openDB } from 'idb';
 
 const DB_NAME = 'RecipeDB';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 const RECIPE_STORE = 'recipes';
 const PERSON_STORE = 'persons';
 const MENU_ITEM_STORE = 'menuItems';
+const SHOPPING_LIST_STORE = 'shoppingLists';
 
 const dbPromise = openDB(DB_NAME, DB_VERSION, {
   upgrade(db, oldVersion, newVersion, transaction) {
@@ -17,6 +18,10 @@ const dbPromise = openDB(DB_NAME, DB_VERSION, {
     if (!db.objectStoreNames.contains(MENU_ITEM_STORE)) {
       const menuItemStore = db.createObjectStore(MENU_ITEM_STORE, { keyPath: 'id', autoIncrement: true });
       menuItemStore.createIndex('dateIndex', 'date');
+    }
+    if (!db.objectStoreNames.contains(SHOPPING_LIST_STORE)) {
+      const shoppingListStore = db.createObjectStore(SHOPPING_LIST_STORE, { keyPath: 'id', autoIncrement: true });
+      shoppingListStore.createIndex('weekStartIndex', 'weekStart');
     }
   },
 });
@@ -156,4 +161,25 @@ export function compressImage(base64String, maxWidth = 300, maxHeight = 300) {
     };
     img.src = base64String;
   });
+}
+
+// Shopping List functions
+export async function addShoppingList(shoppingList) {
+  const db = await dbPromise;
+  return db.add(SHOPPING_LIST_STORE, shoppingList);
+}
+
+export async function getShoppingList(weekStart) {
+  const db = await dbPromise;
+  return db.getFromIndex(SHOPPING_LIST_STORE, 'weekStartIndex', weekStart);
+}
+
+export async function updateShoppingList(shoppingList) {
+  const db = await dbPromise;
+  return db.put(SHOPPING_LIST_STORE, shoppingList);
+}
+
+export async function deleteShoppingList(id) {
+  const db = await dbPromise;
+  return db.delete(SHOPPING_LIST_STORE, id);
 }
