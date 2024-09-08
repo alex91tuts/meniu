@@ -23,7 +23,7 @@ const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
   };
 
   const handleProfileSelection = (selectedProfiles) => {
-    onAddRecipe(selectedRecipe, selectedProfiles);
+    onAddRecipe({...selectedRecipe, profiles: selectedProfiles});
     setShowProfilePopup(false);
     setSelectedRecipe(null);
   };

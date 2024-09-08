@@ -33,14 +33,17 @@ const RecipeCard = ({ title, image, mealType, onClick, onAdd, showAddButton, pro
           </div>
           {profiles && (
             <div className="flex -space-x-2 overflow-hidden">
-              {profiles.map((profile, index) => (
-                <img
-                  key={index}
-                  className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                  src={profile.picture}
-                  alt={profile.name}
-                />
-              ))}
+              {profiles && profiles.map((profileId, index) => {
+                const profile = profiles.find(p => p.id === profileId);
+                return profile ? (
+                  <img
+                    key={index}
+                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                    src={profile.picture}
+                    alt={profile.name}
+                  />
+                ) : null;
+              })}
             </div>
           )}
         </div>
