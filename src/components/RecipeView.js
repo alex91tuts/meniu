@@ -16,7 +16,7 @@ const RecipeView = ({ recipe, onClose }) => {
         <img src={recipe.image} alt={recipe.title} className="w-full h-64 object-cover rounded-lg mb-4" />
         <p className="text-gray-600 dark:text-gray-300 mb-4">{recipe.description}</p>
         <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2 dark:text-white">Ingredients</h3>
+          <h3 className="text-xl font-semibold mb-2 dark:text-white">Ingrediente</h3>
           <ul className="list-disc list-inside">
             {recipe.ingredients.map((ingredient, index) => (
               <li key={index} className="dark:text-gray-300">
@@ -26,7 +26,7 @@ const RecipeView = ({ recipe, onClose }) => {
           </ul>
         </div>
         <div>
-          <h3 className="text-xl font-semibold mb-2 dark:text-white">Instructions</h3>
+          <h3 className="text-xl font-semibold mb-2 dark:text-white">Instrucțiuni</h3>
           <ol className="list-decimal list-inside">
             {recipe.instructions.map((instruction, index) => (
               <li key={index} className="mb-2 dark:text-gray-300">{instruction}</li>
