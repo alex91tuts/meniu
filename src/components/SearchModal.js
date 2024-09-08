@@ -48,7 +48,7 @@ const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
               key={recipe.id}
               title={recipe.title}
               image={recipe.image}
-              participants={[]}
+              mealType={recipe.mealType}
               onClick={() => {}}
               onAdd={() => onAddRecipe(recipe)}
               showAddButton
