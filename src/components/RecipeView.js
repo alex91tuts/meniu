@@ -43,7 +43,7 @@ const RecipeView = ({ recipe, onClose }) => {
           </div>
         </div>
         <div className="px-6">
-          <p className="text-[0.9rem] text-gray-600 dark:text-gray-300 mb-4">{recipe.description}</p>
+          <p className="text-[0.9rem] text-gray-600 dark:text-gray-300 mb-4 text-justify">{recipe.description}</p>
           <SwitchButton
             activeTab={activeTab}
             setActiveTab={setActiveTab}
