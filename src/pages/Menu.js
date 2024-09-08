@@ -81,16 +81,6 @@ const Menu = () => {
     };
   }, [weekOffset]);
 
-  const loadRecipes = async () => {
-    try {
-      const recipes = await getAllRecipes();
-      setRecipeList(recipes);
-      console.log('Loaded recipes:', recipes);
-    } catch (error) {
-      console.error('Error loading recipes:', error);
-    }
-  };
-
   const loadMenuItems = async () => {
     try {
       const endOfWeek = new Date(startOfWeek);
