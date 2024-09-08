@@ -128,7 +128,7 @@ const Menu = () => {
         />
       ) : (
         <>
-          <div className="mb-6 flex justify-between items-center">
+          <div className="mb-4 flex justify-between items-center w-full">
             <div className="flex items-center space-x-4">
               <button
                 onClick={handlePreviousWeek}
@@ -153,6 +153,8 @@ const Menu = () => {
                 <FaChevronRight color="#ffc20d" />
               </button>
             </div>
+          </div>
+          <div className="mb-6 w-full">
             <div className="grid grid-cols-7 gap-2">
               {weekDays.map((day, index) => {
                 const date = new Date(startOfWeek);
