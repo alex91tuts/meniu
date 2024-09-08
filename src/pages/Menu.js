@@ -128,14 +128,8 @@ const Menu = () => {
         />
       ) : (
         <>
-          <div className="flex items-center justify-between mb-6">
-            <button
-              onClick={handlePreviousWeek}
-              className="p-2 rounded bg-gray-200 hover:bg-gray-300"
-            >
-              <FaChevronLeft />
-            </button>
-            <div className="grid grid-cols-7 gap-2 flex-grow mx-4">
+          <div className="mb-6">
+            <div className="grid grid-cols-7 gap-2 mb-2">
               {weekDays.map((day, index) => {
                 const date = new Date(startOfWeek);
                 date.setDate(startOfWeek.getDate() + index);
@@ -158,12 +152,20 @@ const Menu = () => {
                 );
               })}
             </div>
-            <button
-              onClick={handleNextWeek}
-              className="p-2 rounded bg-gray-200 hover:bg-gray-300"
-            >
-              <FaChevronRight />
-            </button>
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={handlePreviousWeek}
+                className="p-2 rounded bg-gray-200 hover:bg-gray-300"
+              >
+                <FaChevronLeft />
+              </button>
+              <button
+                onClick={handleNextWeek}
+                className="p-2 rounded bg-gray-200 hover:bg-gray-300"
+              >
+                <FaChevronRight />
+              </button>
+            </div>
           </div>
           <div className="flex justify-between mb-6">
             {Object.keys(mealTypes).map((mealType) => (
