@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 import RecipeCard from './RecipeCard';
+import ProfileSelectionPopup from './ProfileSelectionPopup';
 
 const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
   const { theme } = useContext(ThemeContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMealType, setSelectedMealType] = useState('All');
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const mealTypes = ['All', 'Mic dejun', 'Pranz', 'Cina'];
 
@@ -13,6 +16,17 @@ const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
     recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedMealType === 'All' || recipe.mealType === selectedMealType)
   );
+
+  const handleAddClick = (recipe) => {
+    setSelectedRecipe(recipe);
+    setShowProfilePopup(true);
+  };
+
+  const handleProfileSelection = (selectedProfiles) => {
+    onAddRecipe(selectedRecipe, selectedProfiles);
+    setShowProfilePopup(false);
+    setSelectedRecipe(null);
+  };
 
   if (!isOpen) return null;
 
@@ -50,7 +64,7 @@ const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
               image={recipe.image}
               mealType={recipe.mealType}
               onClick={() => {}}
-              onAdd={() => onAddRecipe(recipe)}
+              onAdd={() => handleAddClick(recipe)}
               showAddButton
             />
           ))}
@@ -62,6 +76,11 @@ const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
           Close
         </button>
       </div>
+      <ProfileSelectionPopup
+        isOpen={showProfilePopup}
+        onClose={() => setShowProfilePopup(false)}
+        onConfirm={handleProfileSelection}
+      />
     </div>
   );
 };
