@@ -23,22 +23,22 @@ const RecipeView = ({ recipe, onClose }) => {
         <div className="px-6">
           <p className="text-gray-600 dark:text-gray-300 mb-4">{recipe.description}</p>
           <div className="flex justify-center mb-4">
-            <div className="inline-flex rounded-md bg-[#212121] p-1 w-11/12">
+            <div className="inline-flex rounded-full bg-[#212121] p-1 w-11/12">
               <button
-                className={`w-1/2 rounded-md py-2 text-sm font-medium ${
+                className={`w-1/2 rounded-full py-2 text-sm font-medium transition-all duration-300 ${
                   activeTab === 'ingredients'
                     ? 'bg-[#272727] text-[#fec10d]'
-                    : 'text-[#525252]'
+                    : 'text-[#525252] hover:text-white'
                 }`}
                 onClick={() => setActiveTab('ingredients')}
               >
                 Ingrediente
               </button>
               <button
-                className={`w-1/2 rounded-md py-2 text-sm font-medium ${
+                className={`w-1/2 rounded-full py-2 text-sm font-medium transition-all duration-300 ${
                   activeTab === 'instructions'
                     ? 'bg-[#272727] text-[#fec10d]'
-                    : 'text-[#525252]'
+                    : 'text-[#525252] hover:text-white'
                 }`}
                 onClick={() => setActiveTab('instructions')}
               >
