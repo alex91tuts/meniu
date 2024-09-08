@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { getMenuItemsWithProfiles } from '../utils/db';
 import { generateShoppingList } from '../utils/shoppingListGenerator';
 import { FaChevronLeft, FaChevronRight, FaCheck, FaPlus } from 'react-icons/fa';
+import AddItemModal from '../components/AddItemModal';
 
 const Shopping = () => {
   const [shoppingList, setShoppingList] = useState([]);
   const [pantryItems, setPantryItems] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
-  const [newItem, setNewItem] = useState({ ingredient: '', quantity: '', quantityType: 'grams', category: 'Other' });
+  const [showAddItemModal, setShowAddItemModal] = useState(false);
 
   useEffect(() => {
     loadShoppingList();
@@ -68,43 +69,44 @@ const Shopping = () => {
     });
   };
 
-  const handleNewItemChange = (e) => {
-    const { name, value } = e.target;
-    setNewItem(prev => ({ ...prev, [name]: value }));
-  };
-
-  const addNewItem = () => {
-    if (newItem.ingredient && newItem.quantity) {
-      setShoppingList(prevList => {
-        const categoryIndex = prevList.findIndex(c => c.category === newItem.category);
-        if (categoryIndex !== -1) {
-          const updatedCategory = {
-            ...prevList[categoryIndex],
-            items: [...prevList[categoryIndex].items, { ...newItem, checked: false }]
-          };
-          return [
-            ...prevList.slice(0, categoryIndex),
-            updatedCategory,
-            ...prevList.slice(categoryIndex + 1)
-          ];
-        } else {
-          return [
-            ...prevList,
-            {
-              id: prevList.length + 1,
-              category: newItem.category,
-              items: [{ ...newItem, checked: false }]
-            }
-          ];
-        }
-      });
-      setNewItem({ ingredient: '', quantity: '', quantityType: 'grams', category: 'Other' });
-    }
+  const addNewItem = (newItem) => {
+    setShoppingList(prevList => {
+      const categoryIndex = prevList.findIndex(c => c.category === newItem.category);
+      if (categoryIndex !== -1) {
+        const updatedCategory = {
+          ...prevList[categoryIndex],
+          items: [...prevList[categoryIndex].items, { ...newItem, checked: false }]
+        };
+        return [
+          ...prevList.slice(0, categoryIndex),
+          updatedCategory,
+          ...prevList.slice(categoryIndex + 1)
+        ];
+      } else {
+        return [
+          ...prevList,
+          {
+            id: prevList.length + 1,
+            category: newItem.category,
+            items: [{ ...newItem, checked: false }]
+          }
+        ];
+      }
+    });
+    setShowAddItemModal(false);
   };
 
   return (
     <div className="container mx-auto px-2 sm:px-4">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 dark:text-white">Shopping List</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl sm:text-3xl font-bold dark:text-white">Lista de cumpărături</h1>
+        <button
+          onClick={() => setShowAddItemModal(true)}
+          className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center"
+        >
+          <FaPlus className="mr-1" /> Adaugă
+        </button>
+      </div>
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center space-x-2 sm:space-x-4">
           <button
@@ -119,57 +121,6 @@ const Shopping = () => {
             className="p-1 sm:p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
           >
             <FaChevronRight className="text-gray-600 dark:text-gray-300" />
-          </button>
-        </div>
-      </div>
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2 dark:text-white">Add New Item</h2>
-        <div className="flex space-x-2">
-          <input
-            type="text"
-            name="ingredient"
-            value={newItem.ingredient}
-            onChange={handleNewItemChange}
-            placeholder="Ingredient"
-            className="flex-grow p-2 border rounded dark:bg-gray-700 dark:text-white"
-          />
-          <input
-            type="text"
-            name="quantity"
-            value={newItem.quantity}
-            onChange={handleNewItemChange}
-            placeholder="Quantity"
-            className="w-20 p-2 border rounded dark:bg-gray-700 dark:text-white"
-          />
-          <select
-            name="quantityType"
-            value={newItem.quantityType}
-            onChange={handleNewItemChange}
-            className="p-2 border rounded dark:bg-gray-700 dark:text-white"
-          >
-            <option value="grams">grams</option>
-            <option value="piece">piece</option>
-            <option value="ml">ml</option>
-          </select>
-          <select
-            name="category"
-            value={newItem.category}
-            onChange={handleNewItemChange}
-            className="p-2 border rounded dark:bg-gray-700 dark:text-white"
-          >
-            <option value="Other">Other</option>
-            <option value="Produce">Produce</option>
-            <option value="Dairy">Dairy</option>
-            <option value="Meat">Meat</option>
-            <option value="Grains">Grains</option>
-            <option value="Canned Goods">Canned Goods</option>
-            <option value="Spices">Spices</option>
-          </select>
-          <button
-            onClick={addNewItem}
-            className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            <FaPlus />
           </button>
         </div>
       </div>
@@ -217,6 +168,11 @@ const Shopping = () => {
           </div>
         </div>
       )}
+      <AddItemModal
+        isOpen={showAddItemModal}
+        onClose={() => setShowAddItemModal(false)}
+        onAddItem={addNewItem}
+      />
     </div>
   );
 };
