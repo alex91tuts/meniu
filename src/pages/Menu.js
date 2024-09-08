@@ -138,9 +138,13 @@ const Menu = () => {
               </button>
               <span className="text-sm font-medium">
                 {startOfWeek.toLocaleString('default', { month: 'short' })}
-                {startOfWeek.getMonth() !== new Date(startOfWeek).setDate(startOfWeek.getDate() + 6).getMonth() &&
-                  `-${new Date(startOfWeek).setDate(startOfWeek.getDate() + 6).toLocaleString('default', { month: 'short' })}`
-                }
+                {(() => {
+                  const endOfWeek = new Date(startOfWeek);
+                  endOfWeek.setDate(startOfWeek.getDate() + 6);
+                  return startOfWeek.getMonth() !== endOfWeek.getMonth()
+                    ? `-${endOfWeek.toLocaleString('default', { month: 'short' })}`
+                    : '';
+                })()}
               </span>
               <button
                 onClick={handleNextWeek}
