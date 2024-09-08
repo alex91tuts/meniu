@@ -22,10 +22,16 @@ const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
     loadProfiles();
   }, []);
 
+  useEffect(() => {
+    console.log('Recipes received in SearchModal:', recipes);
+  }, [recipes]);
+
   const filteredRecipes = recipes.filter(recipe =>
     recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedMealType === 'All' || recipe.mealType === selectedMealType)
   );
+
+  console.log('Filtered recipes:', filteredRecipes);
 
   const handleAddClick = (recipe) => {
     setSelectedRecipe(recipe);

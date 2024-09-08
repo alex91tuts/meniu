@@ -238,6 +238,7 @@ const Menu = () => {
         recipes={recipeList}
         onAddRecipe={handleAddToWeeklyMenu}
       />
+      {console.log('RecipeList in Menu:', recipeList)}
     </div>
   );
 };
