@@ -180,7 +180,8 @@ const Menu = () => {
                   key={`${selectedMealType}-${recipe.id}-${index}`}
                   title={recipe.title}
                   image={recipe.image}
-                  participants={participants}
+                  mealType={recipe.mealType}
+                  profiles={recipe.profiles}
                   onClick={() => handleEditRecipe(recipe)}
                 />
               ))}
