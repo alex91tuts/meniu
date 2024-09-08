@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 const RecipeView = ({ recipe, onClose }) => {
+  const [activeTab, setActiveTab] = useState('ingredients');
+
   if (!recipe) return null;
 
   return (
@@ -20,24 +22,50 @@ const RecipeView = ({ recipe, onClose }) => {
         <h2 className="text-2xl font-bold dark:text-white text-center mb-4">{recipe.title}</h2>
         <div className="px-6">
           <p className="text-gray-600 dark:text-gray-300 mb-4">{recipe.description}</p>
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold mb-2 dark:text-white">Ingrediente</h3>
-            <ul className="list-disc list-inside">
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index} className="dark:text-gray-300">
-                  {ingredient.quantity} {ingredient.quantityType} {ingredient.ingredient}
-                </li>
-              ))}
-            </ul>
+          <div className="flex justify-center mb-4">
+            <div className="inline-flex rounded-md bg-[#212121] p-1 w-11/12">
+              <button
+                className={`w-1/2 rounded-md py-2 text-sm font-medium ${
+                  activeTab === 'ingredients'
+                    ? 'bg-[#272727] text-[#fec10d]'
+                    : 'text-[#525252]'
+                }`}
+                onClick={() => setActiveTab('ingredients')}
+              >
+                Ingrediente
+              </button>
+              <button
+                className={`w-1/2 rounded-md py-2 text-sm font-medium ${
+                  activeTab === 'instructions'
+                    ? 'bg-[#272727] text-[#fec10d]'
+                    : 'text-[#525252]'
+                }`}
+                onClick={() => setActiveTab('instructions')}
+              >
+                Instrucțiuni
+              </button>
+            </div>
           </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-2 dark:text-white">Instrucțiuni</h3>
-            <ol className="list-decimal list-inside">
-              {recipe.instructions.map((instruction, index) => (
-                <li key={index} className="mb-2 dark:text-gray-300">{instruction}</li>
-              ))}
-            </ol>
-          </div>
+          {activeTab === 'ingredients' && (
+            <div className="mb-4">
+              <ul className="list-disc list-inside">
+                {recipe.ingredients.map((ingredient, index) => (
+                  <li key={index} className="dark:text-gray-300">
+                    {ingredient.quantity} {ingredient.quantityType} {ingredient.ingredient}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {activeTab === 'instructions' && (
+            <div>
+              <ol className="list-decimal list-inside">
+                {recipe.instructions.map((instruction, index) => (
+                  <li key={index} className="mb-2 dark:text-gray-300">{instruction}</li>
+                ))}
+              </ol>
+            </div>
+          )}
         </div>
       </div>
     </div>
