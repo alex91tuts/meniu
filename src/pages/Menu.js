@@ -5,7 +5,7 @@ import RecipeForm from '../components/RecipeForm';
 import SearchModal from '../components/SearchModal';
 import { getAllRecipes, addRecipe, updateRecipe, deleteRecipe } from '../utils/db';
 import users from '../data/users';
-import { FaCoffee, FaUtensils, FaMoon } from 'react-icons/fa';
+import { FaCoffee, FaUtensils, FaMoon, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const Menu = () => {
   const { theme } = useContext(ThemeContext);
@@ -16,12 +16,12 @@ const Menu = () => {
   const [selectedMealType, setSelectedMealType] = useState('Mic dejun');
   const [selectedDay, setSelectedDay] = useState(0);
   const [weeklyMenu, setWeeklyMenu] = useState({});
+  const [weekOffset, setWeekOffset] = useState(0);
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const currentDate = new Date();
-  const currentDay = currentDate.getDay();
   const startOfWeek = new Date(currentDate);
-  startOfWeek.setDate(currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
+  startOfWeek.setDate(currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 : 1) + weekOffset * 7);
 
   useEffect(() => {
     loadRecipes();
@@ -109,6 +109,14 @@ const Menu = () => {
     setShowSearchModal(false);
   };
 
+  const handlePreviousWeek = () => {
+    setWeekOffset(prevOffset => prevOffset - 1);
+  };
+
+  const handleNextWeek = () => {
+    setWeekOffset(prevOffset => prevOffset + 1);
+  };
+
   return (
     <div>
       {showForm ? (
@@ -120,27 +128,42 @@ const Menu = () => {
         />
       ) : (
         <>
-          <div className="grid grid-cols-7 gap-2 mb-6">
-            {weekDays.map((day, index) => {
-              const date = new Date(startOfWeek);
-              date.setDate(startOfWeek.getDate() + index);
-              const isCurrentDay = date.toDateString() === currentDate.toDateString();
+          <div className="flex items-center justify-between mb-6">
+            <button
+              onClick={handlePreviousWeek}
+              className="p-2 rounded bg-gray-200 hover:bg-gray-300"
+            >
+              <FaChevronLeft />
+            </button>
+            <div className="grid grid-cols-7 gap-2 flex-grow mx-4">
+              {weekDays.map((day, index) => {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + index);
+                const isCurrentDay = date.toDateString() === currentDate.toDateString();
 
-              return (
-                <button
-                  key={day}
-                  onClick={() => setSelectedDay(index)}
-                  className={`flex flex-col items-center p-2 rounded ${
-                    selectedDay === index ? 'border-2 border-yellow-400' : ''
-                  }`}
-                  style={{ backgroundColor: theme.secondary }}
-                >
-                  <span className="text-sm font-medium">{day}</span>
-                  <span className="text-lg font-semibold">{date.getDate().toString().padStart(2, '0')}</span>
-                  {isCurrentDay && <div className="w-1 h-1 bg-red-500 rounded-full mt-1"></div>}
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={day}
+                    onClick={() => setSelectedDay(index)}
+                    className={`flex flex-col items-center p-2 rounded ${
+                      selectedDay === index ? 'border-2 border-yellow-400' : ''
+                    }`}
+                    style={{ backgroundColor: theme.secondary }}
+                  >
+                    <span className="text-sm font-medium">{day}</span>
+                    <span className="text-lg font-semibold">{date.getDate().toString().padStart(2, '0')}</span>
+                    <span className="text-xs">{date.toLocaleString('default', { month: 'short' })}</span>
+                    {isCurrentDay && <div className="w-1 h-1 bg-red-500 rounded-full mt-1"></div>}
+                  </button>
+                );
+              })}
+            </div>
+            <button
+              onClick={handleNextWeek}
+              className="p-2 rounded bg-gray-200 hover:bg-gray-300"
+            >
+              <FaChevronRight />
+            </button>
           </div>
           <div className="flex justify-between mb-6">
             {Object.keys(mealTypes).map((mealType) => (
