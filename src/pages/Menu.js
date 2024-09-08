@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
+import RecipeView from '../components/RecipeView';
 import SearchModal from '../components/SearchModal';
 import { getAllRecipes, addRecipe, updateRecipe, deleteRecipe, addMenuItem, getMenuItemsWithProfiles, updateMenuItem, deleteMenuItem } from '../utils/db';
 import { FaTrash } from 'react-icons/fa';
@@ -11,6 +12,7 @@ const Menu = () => {
   const { theme } = useContext(ThemeContext);
   const [showForm, setShowForm] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
+  const [showRecipeView, setShowRecipeView] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [recipeList, setRecipeList] = useState([]);
   const [selectedMealType, setSelectedMealType] = useState('Mic dejun');
@@ -70,6 +72,11 @@ const Menu = () => {
     'Mic dejun': recipeList.filter(recipe => recipe.mealType === 'Mic dejun'),
     'Pranz': recipeList.filter(recipe => recipe.mealType === 'Pranz'),
     'Cina': recipeList.filter(recipe => recipe.mealType === 'Cina'),
+  };
+
+  const handleViewRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
+    setShowRecipeView(true);
   };
 
   const handleEditRecipe = (recipe) => {
@@ -151,6 +158,12 @@ const Menu = () => {
 
   return (
     <div>
+      {showRecipeView && (
+        <RecipeView
+          recipe={selectedRecipe}
+          onClose={() => setShowRecipeView(false)}
+        />
+      )}
       {showForm ? (
         <RecipeForm 
           recipe={selectedRecipe} 
@@ -257,7 +270,7 @@ const Menu = () => {
                     image={menuItem.recipe.image}
                     mealType={menuItem.recipe.mealType}
                     profiles={menuItem.profiles}
-                    onClick={() => handleEditRecipe(menuItem.recipe)}
+                    onClick={() => handleViewRecipe(menuItem.recipe)}
                     onDelete={() => handleDeleteMenuItem(menuItem.id)}
                   />
                 ));
