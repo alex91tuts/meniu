@@ -31,9 +31,9 @@ const RecipeCard = ({ title, image, mealType, onClick, onAdd, showAddButton, pro
             <span className="text-lg mr-2">{getMealTypeIcon(mealType)}</span>
             <span className="text-sm text-gray-500">{mealType}</span>
           </div>
-          {profiles.length > 0 && (
+          {profiles && profiles.length > 0 && (
             <div className="flex -space-x-2 overflow-hidden">
-              {profiles.map((profile, index) => (
+              {profiles.map((profile) => (
                 <img
                   key={profile.id}
                   className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
