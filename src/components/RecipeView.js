@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import SwitchButton from './SwitchButton';
 
 const RecipeView = ({ recipe, onClose }) => {
   const [activeTab, setActiveTab] = useState('ingredients');
 
   if (!recipe) return null;
+
+  const switchOptions = [
+    { value: 'ingredients', label: 'Ingrediente' },
+    { value: 'instructions', label: 'Instrucțiuni' },
+  ];
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex flex-col z-50">
@@ -22,30 +28,11 @@ const RecipeView = ({ recipe, onClose }) => {
         <h2 className="text-2xl font-bold dark:text-white text-center mb-4">{recipe.title}</h2>
         <div className="px-6">
           <p className="text-gray-600 dark:text-gray-300 mb-4">{recipe.description}</p>
-          <div className="flex justify-center mb-4">
-            <div className="inline-flex rounded-full bg-[#212121] p-1 w-11/12">
-              <button
-                className={`w-1/2 rounded-full py-2 text-xs font-medium transition-all duration-300 ${
-                  activeTab === 'ingredients'
-                    ? 'bg-[#272727] text-[#fec10d]'
-                    : 'text-[#525252] hover:text-white'
-                }`}
-                onClick={() => setActiveTab('ingredients')}
-              >
-                Ingrediente
-              </button>
-              <button
-                className={`w-1/2 rounded-full py-2 text-xs font-medium transition-all duration-300 ${
-                  activeTab === 'instructions'
-                    ? 'bg-[#272727] text-[#fec10d]'
-                    : 'text-[#525252] hover:text-white'
-                }`}
-                onClick={() => setActiveTab('instructions')}
-              >
-                Instrucțiuni
-              </button>
-            </div>
-          </div>
+          <SwitchButton
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            options={switchOptions}
+          />
           {activeTab === 'ingredients' && (
             <div className="mb-4">
               <ul className="list-disc list-inside">
