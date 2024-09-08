@@ -22,7 +22,11 @@ const SearchModal = ({ isOpen, onClose, recipes, onAddRecipe }) => {
     setShowProfilePopup(true);
   };
 
-  const handleProfileSelection = (selectedProfiles) => {
+  const handleProfileSelection = (selectedProfileIds) => {
+    const selectedProfiles = selectedProfileIds.map(id => {
+      const profile = profiles.find(p => p.id === id);
+      return profile ? { id: profile.id, name: profile.name, picture: profile.picture } : null;
+    }).filter(Boolean);
     onAddRecipe({...selectedRecipe, profiles: selectedProfiles});
     setShowProfilePopup(false);
     setSelectedRecipe(null);
