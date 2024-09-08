@@ -128,8 +128,28 @@ const Menu = () => {
         />
       ) : (
         <>
-          <div className="mb-6">
-            <div className="grid grid-cols-7 gap-2 mb-2">
+          <div className="mb-6 flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={handlePreviousWeek}
+                className="p-2"
+              >
+                <FaChevronLeft color="#ffc20d" />
+              </button>
+              <span className="text-sm font-medium">
+                {startOfWeek.toLocaleString('default', { month: 'short' })}
+                {startOfWeek.getMonth() !== new Date(startOfWeek).setDate(startOfWeek.getDate() + 6).getMonth() &&
+                  `-${new Date(startOfWeek).setDate(startOfWeek.getDate() + 6).toLocaleString('default', { month: 'short' })}`
+                }
+              </span>
+              <button
+                onClick={handleNextWeek}
+                className="p-2"
+              >
+                <FaChevronRight color="#ffc20d" />
+              </button>
+            </div>
+            <div className="grid grid-cols-7 gap-2">
               {weekDays.map((day, index) => {
                 const date = new Date(startOfWeek);
                 date.setDate(startOfWeek.getDate() + index);
@@ -146,25 +166,10 @@ const Menu = () => {
                   >
                     <span className="text-sm font-medium">{day}</span>
                     <span className="text-lg font-semibold">{date.getDate().toString().padStart(2, '0')}</span>
-                    <span className="text-xs">{date.toLocaleString('default', { month: 'short' })}</span>
                     {isCurrentDay && <div className="w-1 h-1 bg-red-500 rounded-full mt-1"></div>}
                   </button>
                 );
               })}
-            </div>
-            <div className="flex justify-center space-x-4">
-              <button
-                onClick={handlePreviousWeek}
-                className="p-2"
-              >
-                <FaChevronLeft color="#ffc20d" />
-              </button>
-              <button
-                onClick={handleNextWeek}
-                className="p-2"
-              >
-                <FaChevronRight color="#ffc20d" />
-              </button>
             </div>
           </div>
           <div className="flex justify-between mb-6">
