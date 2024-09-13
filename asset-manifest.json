@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/meniu/static/css/main.5f2abae2.css",
-    "main.js": "/meniu/static/js/main.e4efae6f.js",
+    "main.js": "/meniu/static/js/main.1772e6ea.js",
     "static/js/952.639d9657.chunk.js": "/meniu/static/js/952.639d9657.chunk.js",
     "static/js/453.5625cb88.chunk.js": "/meniu/static/js/453.5625cb88.chunk.js",
     "service-worker.js": "/meniu/service-worker.js",
     "index.html": "/meniu/index.html",
     "main.5f2abae2.css.map": "/meniu/static/css/main.5f2abae2.css.map",
-    "main.e4efae6f.js.map": "/meniu/static/js/main.e4efae6f.js.map",
+    "main.1772e6ea.js.map": "/meniu/static/js/main.1772e6ea.js.map",
     "952.639d9657.chunk.js.map": "/meniu/static/js/952.639d9657.chunk.js.map",
     "453.5625cb88.chunk.js.map": "/meniu/static/js/453.5625cb88.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5f2abae2.css",
-    "static/js/main.e4efae6f.js"
+    "static/js/main.1772e6ea.js"
   ]
 }
