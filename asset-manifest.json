@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/meniu/static/css/main.df1b947b.css",
-    "main.js": "/meniu/static/js/main.56e7e83a.js",
+    "main.css": "/meniu/static/css/main.bc26c5f3.css",
+    "main.js": "/meniu/static/js/main.c70e361a.js",
     "static/js/952.639d9657.chunk.js": "/meniu/static/js/952.639d9657.chunk.js",
     "static/js/453.5625cb88.chunk.js": "/meniu/static/js/453.5625cb88.chunk.js",
     "service-worker.js": "/meniu/service-worker.js",
     "index.html": "/meniu/index.html",
-    "main.df1b947b.css.map": "/meniu/static/css/main.df1b947b.css.map",
-    "main.56e7e83a.js.map": "/meniu/static/js/main.56e7e83a.js.map",
+    "main.bc26c5f3.css.map": "/meniu/static/css/main.bc26c5f3.css.map",
+    "main.c70e361a.js.map": "/meniu/static/js/main.c70e361a.js.map",
     "952.639d9657.chunk.js.map": "/meniu/static/js/952.639d9657.chunk.js.map",
     "453.5625cb88.chunk.js.map": "/meniu/static/js/453.5625cb88.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.df1b947b.css",
-    "static/js/main.56e7e83a.js"
+    "static/css/main.bc26c5f3.css",
+    "static/js/main.c70e361a.js"
   ]
 }
