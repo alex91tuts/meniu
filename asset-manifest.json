@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/meniu/static/css/main.90dd3ae3.css",
-    "main.js": "/meniu/static/js/main.b3f105e5.js",
-    "static/js/952.639d9657.chunk.js": "/meniu/static/js/952.639d9657.chunk.js",
-    "static/js/453.5625cb88.chunk.js": "/meniu/static/js/453.5625cb88.chunk.js",
+    "main.css": "/meniu/static/css/main.1fe4beba.css",
+    "main.js": "/meniu/static/js/main.53193955.js",
+    "static/js/952.494ac37a.chunk.js": "/meniu/static/js/952.494ac37a.chunk.js",
+    "static/js/453.40ea9939.chunk.js": "/meniu/static/js/453.40ea9939.chunk.js",
     "service-worker.js": "/meniu/service-worker.js",
     "index.html": "/meniu/index.html",
-    "main.90dd3ae3.css.map": "/meniu/static/css/main.90dd3ae3.css.map",
-    "main.b3f105e5.js.map": "/meniu/static/js/main.b3f105e5.js.map",
-    "952.639d9657.chunk.js.map": "/meniu/static/js/952.639d9657.chunk.js.map",
-    "453.5625cb88.chunk.js.map": "/meniu/static/js/453.5625cb88.chunk.js.map"
+    "main.1fe4beba.css.map": "/meniu/static/css/main.1fe4beba.css.map",
+    "main.53193955.js.map": "/meniu/static/js/main.53193955.js.map",
+    "952.494ac37a.chunk.js.map": "/meniu/static/js/952.494ac37a.chunk.js.map",
+    "453.40ea9939.chunk.js.map": "/meniu/static/js/453.40ea9939.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.90dd3ae3.css",
-    "static/js/main.b3f105e5.js"
+    "static/css/main.1fe4beba.css",
+    "static/js/main.53193955.js"
   ]
 }
